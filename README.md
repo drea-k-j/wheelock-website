@@ -1,6 +1,49 @@
 # Wheelock Website
 
-## Requirements
+## Quick Start (Local Development)
+
+### Prerequisites
+- Python 3.8+
+- Node.js 16+
+
+### Backend Setup
+1. Navigate to the backend folder:
+   ```bash
+   cd backend
+   ```
+2. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Start the FastAPI server:
+   ```bash
+   uvicorn main:app --reload
+   ```
+   The API will be available at `http://localhost:8000`
+
+### Frontend Setup
+1. Open a new terminal and navigate to the frontend folder:
+   ```bash
+   cd frontend
+   ```
+2. Install Node dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   The frontend will be available at `http://localhost:5173`
+
+### Testing the Full Stack
+- Frontend: http://localhost:5173
+- Backend API docs: http://localhost:8000/docs
+- Backend will serve at `http://localhost:8000` with CORS enabled for localhost:3000 and localhost:5173
+
+---
+
+## Project Requirements
 I want a website that does not look like every other website, specifically I do not want users to have to scroll very far. I'm interested in headers or a hamburger menu, or something similar that looks fresh. The website needs to be easy for one to three non-technical administrators to update. For forms, I'm uncertain if they should be embedded or not. For the technical stack, I'm interested in something in Python and I know React. I'm familiar with FastAPI, Flask, and Django, but I'm open to other frameworks if there are any that are well suited to this request. I'm not looking for log in features (except for administrators) and I'm most unclear about how these files should be stored (the blocks of text for each section and subsection and the pictures). I need the following sections:
 Main page photo reel that is easy to keep fresh. We could use a Google service for this.
 Announcements: front page, multiple announcements at a time, most will link to other pages
