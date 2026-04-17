@@ -1,5 +1,30 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional
+
+
+# Admin Schemas
+class AdminLogin(BaseModel):
+    username: str
+    password: str
+
+
+# Generic Section Schema (used by multiple routes)
+class SectionCreate(BaseModel):
+    subsection: str
+    content: str
+
+
+class SectionResponse(BaseModel):
+    id: int
+    subsection: str
+    content: str
+    pdf_url: Optional[str] = None
+    updated_at: Optional[datetime] = None
+    created_at: Optional[datetime] = None
+    
+    class Config:
+        from_attributes = True
 
 
 # Announcement Schemas
@@ -15,38 +40,6 @@ class AnnouncementResponse(BaseModel):
     content: str
     created_at: datetime
     is_featured: bool
-    
-    class Config:
-        from_attributes = True
-
-
-# About Section Schemas
-class AboutSectionCreate(BaseModel):
-    subsection: str
-    content: str
-
-
-class AboutSectionResponse(BaseModel):
-    id: int
-    subsection: str
-    content: str
-    updated_at: datetime
-    
-    class Config:
-        from_attributes = True
-
-
-# Wheelock House Schemas
-class WheelockHouseSectionCreate(BaseModel):
-    subsection: str
-    content: str
-
-
-class WheelockHouseSectionResponse(BaseModel):
-    id: int
-    subsection: str
-    content: str
-    updated_at: datetime
     
     class Config:
         from_attributes = True

@@ -1,24 +1,21 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import LinkableHeading from './LinkableHeading'
-import PhotoGallery from './PhotoGallery'
+
+const SUBSECTIONS = ['Sign-up']
 
 const DEFAULT_CONTENT = {
-  'About': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  'Contact': 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.\n\nEt quis nostrum exercitationem ullam corporis suscipit laboriosam. Nisi ut quid aliquid ex ea commodi consequatur quia voluptas assumenda est.',
-  'Reservations': 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident. Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.\n\nTemporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.'
+  'Sign-up': 'Subscribe to our monthly newsletter to stay updated on Wheelock House events, announcements, and community news.\n\nEnter your email below to join our mailing list, or click the button to sign up directly.'
 }
 
-export default function WheelockHouse({ isAdminMode }) {
+export default function Newsletters({ isAdminMode }) {
   const [sections, setSections] = useState({})
-  const [subsections, setSubsections] = useState([])
   const [loading, setLoading] = useState(true)
   const [editingSection, setEditingSection] = useState(null)
   const [editingContent, setEditingContent] = useState('')
 
   useEffect(() => {
-    fetchConfig()
-    fetchWheelockHouse()
+    fetchNewsletters()
   }, [])
 
   useEffect(() => {
@@ -32,26 +29,16 @@ export default function WheelockHouse({ isAdminMode }) {
     }
   }, [sections])
 
-  const fetchConfig = async () => {
+  const fetchNewsletters = async () => {
     try {
-      const response = await axios.get('/api/config/sections/wheelock-house')
-      setSubsections(response.data.subsections || [])
-    } catch (error) {
-      console.error('Error fetching config:', error)
-      setSubsections(['About', 'Contact', 'Reservations'])
-    }
-  }
-
-  const fetchWheelockHouse = async () => {
-    try {
-      const response = await axios.get('/api/wheelock-house')
+      const response = await axios.get('/api/newsletters')
       const data = {}
       response.data.forEach(section => {
         data[section.subsection] = section.content
       })
       setSections(data)
     } catch (error) {
-      console.error('Error fetching Wheelock House:', error)
+      console.error('Error fetching Newsletters:', error)
       setSections(DEFAULT_CONTENT)
     } finally {
       setLoading(false)
@@ -60,12 +47,12 @@ export default function WheelockHouse({ isAdminMode }) {
 
   const handleSave = async (subsection) => {
     try {
-      await axios.post('/api/wheelock-house', { 
+      await axios.post('/api/newsletters', { 
         subsection, 
         content: editingContent 
       })
       setEditingSection(null)
-      fetchWheelockHouse()
+      fetchNewsletters()
     } catch (error) {
       console.error('Error saving section:', error)
     }
@@ -83,13 +70,10 @@ export default function WheelockHouse({ isAdminMode }) {
   return (
     <section className="py-12 px-4">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-wheelock-dark mb-8">Wheelock House</h1>
-        
-        {/* Photo gallery from Wheelock House folder - cycles through images every 5 seconds */}
-        <PhotoGallery page="wheelock-house" className="mb-8" />
+        <h1 className="text-4xl font-bold text-wheelock-dark mb-8">Newsletters</h1>
 
         <div className="grid gap-8">
-          {subsections.map(subsection => (
+          {SUBSECTIONS.map(subsection => (
             <div key={subsection} className="bg-wheelock-light border-l-4 border-wheelock-accent p-6 rounded shadow">
               <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
                 <LinkableHeading level={2} className="text-2xl font-bold text-wheelock-dark">
@@ -132,9 +116,24 @@ export default function WheelockHouse({ isAdminMode }) {
                   </div>
                 </div>
               ) : (
-                <p className="text-gray-700 whitespace-pre-wrap break-words leading-relaxed w-full">
-                  {sections[subsection] || DEFAULT_CONTENT[subsection] || 'No content yet.'}
-                </p>
+                <div>
+                  <p className="text-gray-700 whitespace-pre-line break-words leading-relaxed w-full mb-4">
+                    {sections[subsection] || DEFAULT_CONTENT[subsection] || 'No content yet.'}
+                  </p>
+                  
+                  {!isAdminMode && (
+                    <div className="mt-4">
+                      <a 
+                        href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-block bg-wheelock-accent text-white px-4 py-2 rounded hover:opacity-90"
+                      >
+                        Subscribe to Newsletter
+                      </a>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           ))}

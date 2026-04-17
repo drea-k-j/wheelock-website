@@ -4,6 +4,9 @@ import Hero from './components/Hero'
 import Announcements from './components/Announcements'
 import About from './components/About'
 import WheelockHouse from './components/WheelockHouse'
+import WheelockWeekend from './components/WheelockWeekend'
+import Residents from './components/Residents'
+import Newsletters from './components/Newsletters'
 import Footer from './components/Footer'
 
 function App() {
@@ -27,6 +30,9 @@ function App() {
       )}
       {currentSection === 'about' && <About isAdminMode={isAdminMode} />}
       {currentSection === 'wheelock-house' && <WheelockHouse isAdminMode={isAdminMode} />}
+      {currentSection === 'wheelock-weekend' && <WheelockWeekend isAdminMode={isAdminMode} />}
+      {currentSection === 'residents' && <Residents isAdminMode={isAdminMode} />}
+      {currentSection === 'newsletters' && <Newsletters isAdminMode={isAdminMode} />}
       
       <Footer />
     </div>

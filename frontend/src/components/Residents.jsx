@@ -1,26 +1,24 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import LinkableHeading from './LinkableHeading'
-import PhotoGallery from './PhotoGallery'
+
+const SUBSECTIONS = ['Manual', 'Application', 'Key Dates']
+
 
 const DEFAULT_CONTENT = {
-  'About': 'an about',
-  'Mission': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  'Vision': 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores. Et quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut quid aliquid ex ea commodi consequatur.',
-  'History': 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.\n\nEt harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est.', 
-  'Leadership': 'Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae itaque earum rerum hic tenetur a sapiente delectus. Ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.'
+  'Manual': <a href="/assets/residents_manual.pdf" download className="inline-block bg-wheelock-accent text-white px-4 py-2 rounded hover:opacity-90 mt-2">Download the Residents' Manual</a>,
+  'Application': 'Interested in becoming a resident? Please fill out the application form linked below. Applications are reviewed on a rolling basis.',
+  'Key Dates': 'Application Deadline TBA\nDecision Notifications TBA'
 }
 
-export default function About({ isAdminMode }) {
+export default function Residents({ isAdminMode }) {
   const [sections, setSections] = useState({})
-  const [subsections, setSubsections] = useState([])
   const [loading, setLoading] = useState(true)
   const [editingSection, setEditingSection] = useState(null)
   const [editingContent, setEditingContent] = useState('')
 
   useEffect(() => {
-    fetchConfig()
-    fetchAbout()
+    fetchResidents()
   }, [])
 
   useEffect(() => {
@@ -34,26 +32,16 @@ export default function About({ isAdminMode }) {
     }
   }, [sections])
 
-  const fetchConfig = async () => {
+  const fetchResidents = async () => {
     try {
-      const response = await axios.get('/api/config/sections/about')
-      setSubsections(response.data.subsections || [])
-    } catch (error) {
-      console.error('Error fetching config:', error)
-      setSubsections(['About', 'History', 'Leadership'])
-    }
-  }
-
-  const fetchAbout = async () => {
-    try {
-      const response = await axios.get('/api/about')
+      const response = await axios.get('/api/residents')
       const data = {}
       response.data.forEach(section => {
         data[section.subsection] = section.content
       })
       setSections(data)
     } catch (error) {
-      console.error('Error fetching about:', error)
+      console.error('Error fetching Residents:', error)
       setSections(DEFAULT_CONTENT)
     } finally {
       setLoading(false)
@@ -62,12 +50,12 @@ export default function About({ isAdminMode }) {
 
   const handleSave = async (subsection) => {
     try {
-      await axios.post('/api/about', { 
+      await axios.post('/api/residents', { 
         subsection, 
         content: editingContent 
       })
       setEditingSection(null)
-      fetchAbout()
+      fetchResidents()
     } catch (error) {
       console.error('Error saving section:', error)
     }
@@ -85,15 +73,12 @@ export default function About({ isAdminMode }) {
   return (
     <section className="py-12 px-4">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-wheelock-dark mb-8">About Wheelock</h1>
-        
-        {/* Photo gallery from About folder - cycles through images every 5 seconds */}
-        <PhotoGallery page="about" className="mb-8" />
+        <h1 className="text-4xl font-bold text-wheelock-dark mb-8">Residents</h1>
 
         <div className="grid gap-8">
-          {subsections.map(subsection => (
+          {SUBSECTIONS.map(subsection => (
             <div key={subsection} className="bg-wheelock-light border-l-4 border-wheelock-accent p-6 rounded shadow">
-              {subsection != 'About' ? <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
+              <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
                 <LinkableHeading level={2} className="text-2xl font-bold text-wheelock-dark">
                   {subsection}
                 </LinkableHeading>
@@ -108,7 +93,7 @@ export default function About({ isAdminMode }) {
                     Edit
                   </button>
                 )}
-              </div> : null}
+              </div>
 
               {editingSection === subsection ? (
                 <div className="space-y-3">
@@ -134,7 +119,7 @@ export default function About({ isAdminMode }) {
                   </div>
                 </div>
               ) : (
-                <p className="text-gray-700 whitespace-pre-wrap break-words leading-relaxed w-full">
+                <p className="text-gray-700 whitespace-pre-line break-words leading-relaxed w-full">
                   {sections[subsection] || DEFAULT_CONTENT[subsection] || 'No content yet.'}
                 </p>
               )}

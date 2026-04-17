@@ -1,0 +1,7 @@
+backend/service_account.json
+**.pem
+notes.txt
+**.db
+**/node_modules/**
+# **/venv/**
+# **/__pycache__/**
