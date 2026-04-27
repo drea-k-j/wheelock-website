@@ -1,8 +1,11 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from database import engine, Base
 from routers import announcements, about, wheelock_house, wheelock_weekend, residents, newsletters, auth, config, photos
+import os
 
 # Create all database tables
 Base.metadata.create_all(bind=engine)
@@ -14,9 +17,11 @@ CERTFILE = CERT_DIR / 'localhost.pem'
 app = FastAPI()
 
 # Configure CORS
+# Get allowed origins from environment or use defaults
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "https://localhost:3000,https://localhost:5173").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://localhost:3000", "https://localhost:5173", "https://drive.google.com"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

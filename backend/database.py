@@ -1,13 +1,15 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
+import os
 
-DATABASE_URL = "sqlite:///./wheelock.db"
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./wheelock.db")
 
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False}
-)
+if DATABASE_URL.startswith("postgresql"):
+    # For PostgreSQL on Render
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg2://")
+
+engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 
 SessionLocal = sessionmaker(
     autocommit=False,

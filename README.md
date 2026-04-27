@@ -43,3 +43,17 @@ See [HOSTING_PLAN.md](HOSTING_PLAN.md) for the complete hosting strategy and dep
 - Frontend: http://localhost:5173
 - Backend API docs: http://localhost:8000/docs
 - Backend will serve at `http://localhost:8000` with CORS enabled for localhost:3000 and localhost:5173
+
+
+Summary Checklist
+ Update database.py for PostgreSQL
+ Update main.py CORS for Render domain
+ Add psycopg2-binary to requirements.txt
+ Create render.yaml (or manually create services)
+ Create backend/render-start.sh
+ Create .env.example
+ Push all changes to GitHub
+ Create Render services (via render.yaml or manually)
+ Set environment variables
+ Test all endpoints
+ Update ALLOWED_ORIGINS after getting Render domain

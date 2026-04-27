@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: wheelock-backend
+    env: python
+    plan: free
+    runtime: python-3.11
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "cd backend && uvicorn main:app --host 0.0.0.0 --port 8000"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: wheelock-postgres
+          property: connectionString
+      - key: ALLOWED_ORIGINS
+        value: https://wheelock-frontend.onrender.com
+
+  - type: static
+    name: wheelock-frontend
+    staticPublishPath: ./frontend/dist
+    buildCommand: "cd frontend && npm install && npm run build"
+    routes:
+      - path: "/*"
+        destination: /index.html
+
+databases:
+  - name: wheelock-postgres
+    plan: free
