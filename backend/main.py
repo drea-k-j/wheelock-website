@@ -1,10 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pathlib import Path
 from database import engine, Base
 from routers import announcements, about, wheelock_house, wheelock_weekend, residents, newsletters, auth, config, photos
 
 # Create all database tables
 Base.metadata.create_all(bind=engine)
+
+CERT_DIR = Path(__file__).resolve().parent.parent / 'certs'
+KEYFILE = CERT_DIR / 'localhost-key.pem'
+CERTFILE = CERT_DIR / 'localhost.pem'
 
 app = FastAPI()
 
@@ -35,4 +40,10 @@ def health():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=8000,
+        # ssl_keyfile=str(KEYFILE),
+        # ssl_certfile=str(CERTFILE),
+    )

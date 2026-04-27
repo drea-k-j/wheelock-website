@@ -9,13 +9,13 @@ router = APIRouter(prefix="/api/residents", tags=["residents"])
 SUBSECTIONS = ["Manual", "Application", "Key Dates"]
 
 
-@router.get("/")
+@router.get("")
 def get_residents(db: Session = Depends(get_db)):
     sections = db.query(ResidentsSection).all()
     return sections
 
 
-@router.post("/")
+@router.post("")
 def create_or_update_residents(section: SectionCreate, db: Session = Depends(get_db)):
     existing = db.query(ResidentsSection).filter(
         ResidentsSection.subsection == section.subsection

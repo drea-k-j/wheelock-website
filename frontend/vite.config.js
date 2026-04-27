@@ -1,25 +1,35 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import fs from 'fs'
+import os from 'os'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
-// Windows mkcert CA location (Chocolatey install)
-const caPath = path.join(process.env.LOCALAPPDATA, 'mkcert', 'rootCA.pem')
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const certDir = path.resolve(__dirname, '../certs')
+const keyPath = path.join(certDir, 'localhost-key.pem')
+const certPath = path.join(certDir, 'localhost.pem')
+const caPath = process.platform === 'win32'
+  ? path.join(process.env.LOCALAPPDATA || '', 'mkcert', 'rootCA.pem')
+  : process.platform === 'darwin'
+    ? path.join(os.homedir(), 'Library', 'Application Support', 'mkcert', 'rootCA.pem')
+    : path.join(os.homedir(), '.local', 'share', 'mkcert', 'rootCA.pem')
 
 export default defineConfig({
   plugins: [react()],
   assetsInclude: ['**/*.JPG', '**/*.JPEG', '**/*.jpg', '**/*.jpeg'],
   server: {
     https: {
-      key: fs.readFileSync('../certs/localhost-key.pem'),
-      cert: fs.readFileSync('../certs/localhost.pem'),
+      key: fs.readFileSync(keyPath),
+      cert: fs.readFileSync(certPath),
       ca: fs.readFileSync(caPath),
     },
     proxy: {
       '/api': {
-        target: 'https://localhost:8000',
+        target: 'http://localhost:8000',
         changeOrigin: true,
-        secure: true, // must stay true when using mkcert
+        secure: false,
       }
     }
   }

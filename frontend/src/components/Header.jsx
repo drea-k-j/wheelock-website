@@ -7,6 +7,12 @@ const scrollToSubsection = (subsection) => {
   window.location.hash = id
 }
 
+const clearHash = () => {
+  if (window.location.hash) {
+    window.history.replaceState(null, '', window.location.pathname + window.location.search)
+  }
+}
+
 export default function Header({ currentSection, setCurrentSection, isAdminMode, setIsAdminMode }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [expandedSection, setExpandedSection] = useState(null)
@@ -69,6 +75,7 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
       <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <button 
           onClick={() => {
+            clearHash()
             setCurrentSection('home')
             setMenuOpen(false)
           }}
@@ -79,7 +86,10 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
 
         <nav className="hidden md:flex gap-6 items-center">
           <button 
-            onClick={() => setCurrentSection('home')}
+            onClick={() => {
+              clearHash()
+              setCurrentSection('home')
+            }}
             className={`px-3 py-2 rounded transition ${currentSection === 'home' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
           >
             Home
@@ -87,7 +97,10 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
           
           <div className="relative group">
             <button 
-              onClick={() => setCurrentSection('about')}
+              onClick={() => {
+                clearHash()
+                setCurrentSection('about')
+              }}
               className={`px-3 py-2 rounded transition ${currentSection === 'about' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
             >
               About
@@ -99,7 +112,10 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
 
           <div className="relative group">
             <button 
-              onClick={() => setCurrentSection('wheelock-house')}
+              onClick={() => {
+                clearHash()
+                setCurrentSection('wheelock-house')
+              }}
               className={`px-3 py-2 rounded transition ${currentSection === 'wheelock-house' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
             >
               Wheelock House
@@ -111,7 +127,10 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
 
           <div className="relative group">
             <button 
-              onClick={() => setCurrentSection('wheelock-weekend')}
+              onClick={() => {
+                clearHash()
+                setCurrentSection('wheelock-weekend')
+              }}
               className={`px-3 py-2 rounded transition ${currentSection === 'wheelock-weekend' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
             >
               Wheelock Weekend
@@ -123,7 +142,10 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
 
           <div className="relative group">
             <button 
-              onClick={() => setCurrentSection('residents')}
+              onClick={() => {
+                clearHash()
+                setCurrentSection('residents')
+              }}
               className={`px-3 py-2 rounded transition ${currentSection === 'residents' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
             >
               Residents
@@ -134,8 +156,10 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
           </div>
 
           <button 
-            onClick={() => setCurrentSection('newsletters')}
-            className={`px-3 py-2 rounded transition ${currentSection === 'newsletters' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
+              onClick={() => {
+                clearHash()
+                setCurrentSection('newsletters')
+              }}
           >
             Newsletters
           </button>
@@ -158,6 +182,7 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
         <nav className="md:hidden bg-gray-700 px-4 py-3 flex flex-col gap-2">
           <button 
             onClick={() => {
+              clearHash()
               setCurrentSection('home')
               setMenuOpen(false)
             }}
@@ -172,6 +197,7 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
                 if (expandedSection === 'about') {
                   setExpandedSection(null)
                 } else {
+                  clearHash()
                   setExpandedSection('about')
                   setCurrentSection('about')
                 }
@@ -194,6 +220,7 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
                 if (expandedSection === 'wheelock-house') {
                   setExpandedSection(null)
                 } else {
+                  clearHash()
                   setExpandedSection('wheelock-house')
                   setCurrentSection('wheelock-house')
                 }
@@ -216,6 +243,7 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
                 if (expandedSection === 'wheelock-weekend') {
                   setExpandedSection(null)
                 } else {
+                  clearHash()
                   setExpandedSection('wheelock-weekend')
                   setCurrentSection('wheelock-weekend')
                 }
@@ -238,6 +266,7 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
                 if (expandedSection === 'residents') {
                   setExpandedSection(null)
                 } else {
+                  clearHash()
                   setExpandedSection('residents')
                   setCurrentSection('residents')
                 }
@@ -256,6 +285,7 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
 
           <button 
             onClick={() => {
+              clearHash()
               setCurrentSection('newsletters')
               setMenuOpen(false)
             }}

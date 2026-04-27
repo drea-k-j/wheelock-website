@@ -28,8 +28,8 @@
   --colors-error_light: #fee2e2;
   --colors-success: #16a34a;
   --colors-success_light: #dcfce7;
-  --fonts-body: system-ui, -apple-system, sans-serif;
-  --fonts-heading: system-ui, -apple-system, sans-serif;
+  --fonts-body: georgia, serif;
+  --fonts-heading: georgia, serif;
   --fontSize-h1: 2.25rem;
   --fontSize-h2: 1.875rem;
   --fontSize-h3: 1.5rem;
@@ -66,9 +66,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--fonts-body, georgia, serif);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -9,13 +9,13 @@ router = APIRouter(prefix="/api/newsletters", tags=["newsletters"])
 SUBSECTIONS = ["Sign-up"]
 
 
-@router.get("/")
+@router.get("")
 def get_newsletters(db: Session = Depends(get_db)):
     sections = db.query(NewslettersSection).all()
     return sections
 
 
-@router.post("/")
+@router.post("")
 def create_or_update_newsletters(section: SectionCreate, db: Session = Depends(get_db)):
     existing = db.query(NewslettersSection).filter(
         NewslettersSection.subsection == section.subsection

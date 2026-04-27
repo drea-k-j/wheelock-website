@@ -11,11 +11,11 @@ SECTIONS_CONFIG = {
     },
     "wheelock-house": {
         "label": "Wheelock House",
-        "subsections": ["About", "Contact", "Reservations"]
+        "subsections": ["Wheelock House", "About", "Apply", "Reservations"]
     },
     "wheelock-weekend": {
         "label": "Wheelock Weekend",
-        "subsections": ["Schedule", "Bios", "Campus Map", "Registration"]
+        "subsections": ["Wheelock Weekend", "Schedule", "Bios", "Campus Map", "Registration"]
     },
     "residents": {
         "label": "Residents",

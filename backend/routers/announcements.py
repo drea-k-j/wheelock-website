@@ -7,12 +7,12 @@ from schemas import AnnouncementCreate, AnnouncementResponse
 router = APIRouter(prefix="/api/announcements", tags=["announcements"])
 
 
-@router.get("/", response_model=list[AnnouncementResponse])
+@router.get("", response_model=list[AnnouncementResponse])
 def get_announcements(db: Session = Depends(get_db)):
-    return db.query(Announcement).order_by(Announcement.created_at.desc()).all()
+    return db.query(Announcement).all()
 
 
-@router.post("/", response_model=AnnouncementResponse)
+@router.post("", response_model=AnnouncementResponse)
 def create_announcement(announcement: AnnouncementCreate, db: Session = Depends(get_db)):
     db_announcement = Announcement(**announcement.dict())
     db.add(db_announcement)

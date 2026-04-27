@@ -45,6 +45,13 @@ export default function Newsletters({ isAdminMode }) {
     }
   }
 
+  const getSectionContent = (subsection) => {
+    if (sections[subsection] !== undefined && sections[subsection] !== null) {
+      return sections[subsection]
+    }
+    return DEFAULT_CONTENT[subsection] || ''
+  }
+
   const handleSave = async (subsection) => {
     try {
       await axios.post('/api/newsletters', { 
@@ -60,7 +67,7 @@ export default function Newsletters({ isAdminMode }) {
 
   const startEdit = (subsection) => {
     setEditingSection(subsection)
-    setEditingContent(sections[subsection] || '')
+    setEditingContent(getSectionContent(subsection))
   }
 
   if (loading) {
@@ -118,7 +125,7 @@ export default function Newsletters({ isAdminMode }) {
               ) : (
                 <div>
                   <p className="text-gray-700 whitespace-pre-line break-words leading-relaxed w-full mb-4">
-                    {sections[subsection] || DEFAULT_CONTENT[subsection] || 'No content yet.'}
+                    {sections[subsection] !== undefined ? sections[subsection] : DEFAULT_CONTENT[subsection] || 'No content yet.'}
                   </p>
                   
                   {!isAdminMode && (

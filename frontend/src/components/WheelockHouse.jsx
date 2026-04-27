@@ -4,9 +4,9 @@ import LinkableHeading from './LinkableHeading'
 import PhotoGallery from './PhotoGallery'
 
 const DEFAULT_CONTENT = {
+  'Wheelock House': 'Wheelock House provides short-term residency, community programming, and event space for Wheelock House guests. Our goal is to make every stay comfortable, welcoming, and easy to engage with campus life.',
   'About': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  'Contact': 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.\n\nEt quis nostrum exercitationem ullam corporis suscipit laboriosam. Nisi ut quid aliquid ex ea commodi consequatur quia voluptas assumenda est.',
-  'Reservations': 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident. Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.\n\nTemporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.'
+  'Apply': 'To apply for a stay at Wheelock House, please send your application materials to wheelockhouse@example.com. Include your preferred dates, purpose of stay, and any accessibility needs. Applications are reviewed on a rolling basis.',
 }
 
 export default function WheelockHouse({ isAdminMode }) {
@@ -38,7 +38,7 @@ export default function WheelockHouse({ isAdminMode }) {
       setSubsections(response.data.subsections || [])
     } catch (error) {
       console.error('Error fetching config:', error)
-      setSubsections(['About', 'Contact', 'Reservations'])
+      setSubsections(['About', 'Apply', 'Reservations'])
     }
   }
 
@@ -58,6 +58,19 @@ export default function WheelockHouse({ isAdminMode }) {
     }
   }
 
+  const getSectionContent = (subsection) => {
+    if (sections[subsection] !== undefined && sections[subsection] !== null) {
+      return sections[subsection]
+    }
+    return DEFAULT_CONTENT[subsection] || ''
+  }
+
+  const pageIntroSubsection = subsections.find(subsection => {
+    const normalizedTitle = 'Wheelock House'.toLowerCase().trim()
+    const normalizedSubsection = subsection.toLowerCase().trim()
+    return normalizedTitle === normalizedSubsection || normalizedTitle.includes(normalizedSubsection)
+  })
+
   const handleSave = async (subsection) => {
     try {
       await axios.post('/api/wheelock-house', { 
@@ -73,23 +86,69 @@ export default function WheelockHouse({ isAdminMode }) {
 
   const startEdit = (subsection) => {
     setEditingSection(subsection)
-    setEditingContent(sections[subsection] || '')
+    setEditingContent(getSectionContent(subsection))
   }
 
   if (loading) {
     return <section className="py-12 px-4 text-center"><p>Loading...</p></section>
   }
 
+  const introContent = pageIntroSubsection ? getSectionContent(pageIntroSubsection) : ''
+  const displayedSubsections = subsections.filter(subsection => subsection !== pageIntroSubsection)
+
   return (
     <section className="py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-wheelock-dark mb-8">Wheelock House</h1>
-        
+
+        {introContent ? (
+          <div className="mb-8 max-w-3xl rounded-xl border-l-4 border-wheelock-accent bg-white p-6 shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
+              <p className="text-xl leading-8 text-gray-800 whitespace-pre-wrap md:flex-1">
+                {editingSection === pageIntroSubsection ? (
+                  <textarea
+                    value={editingContent}
+                    onChange={(e) => setEditingContent(e.target.value)}
+                    rows="6"
+                    className="w-full border rounded px-3 py-2 font-sans"
+                  />
+                ) : (
+                  introContent
+                )}
+              </p>
+              {isAdminMode && editingSection !== pageIntroSubsection && (
+                <button
+                  onClick={() => startEdit(pageIntroSubsection)}
+                  className="text-wheelock-secondary hover:text-wheelock-accent text-sm self-start"
+                >
+                  Edit
+                </button>
+              )}
+            </div>
+            {editingSection === pageIntroSubsection && (
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleSave(pageIntroSubsection)}
+                  className="bg-success text-white px-4 py-2 rounded hover:opacity-90"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setEditingSection(null)}
+                  className="bg-gray-500 text-white px-4 py-2 rounded hover:opacity-90"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+          </div>
+        ) : null}
+
         {/* Photo gallery from Wheelock House folder - cycles through images every 5 seconds */}
         <PhotoGallery page="wheelock-house" className="mb-8" />
 
         <div className="grid gap-8">
-          {subsections.map(subsection => (
+          {displayedSubsections.map(subsection => (
             <div key={subsection} className="bg-wheelock-light border-l-4 border-wheelock-accent p-6 rounded shadow">
               <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
                 <LinkableHeading level={2} className="text-2xl font-bold text-wheelock-dark">
@@ -133,7 +192,7 @@ export default function WheelockHouse({ isAdminMode }) {
                 </div>
               ) : (
                 <p className="text-gray-700 whitespace-pre-wrap break-words leading-relaxed w-full">
-                  {sections[subsection] || DEFAULT_CONTENT[subsection] || 'No content yet.'}
+                  {sections[subsection] !== undefined ? sections[subsection] : DEFAULT_CONTENT[subsection] || 'No content yet.'}
                 </p>
               )}
             </div>

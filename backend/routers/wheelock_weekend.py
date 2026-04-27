@@ -9,13 +9,13 @@ router = APIRouter(prefix="/api/wheelock-weekend", tags=["wheelock_weekend"])
 SUBSECTIONS = ["Schedule", "Bios", "Campus Map", "Registration"]
 
 
-@router.get("/")
+@router.get("")
 def get_wheelock_weekend(db: Session = Depends(get_db)):
     sections = db.query(WheelockWeekendSection).all()
     return sections
 
 
-@router.post("/")
+@router.post("")
 def create_or_update_wheelock_weekend(section: SectionCreate, db: Session = Depends(get_db)):
     existing = db.query(WheelockWeekendSection).filter(
         WheelockWeekendSection.subsection == section.subsection

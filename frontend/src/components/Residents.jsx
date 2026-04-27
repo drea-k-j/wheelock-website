@@ -48,6 +48,13 @@ export default function Residents({ isAdminMode }) {
     }
   }
 
+  const getSectionContent = (subsection) => {
+    if (sections[subsection] !== undefined && sections[subsection] !== null) {
+      return sections[subsection]
+    }
+    return DEFAULT_CONTENT[subsection] || ''
+  }
+
   const handleSave = async (subsection) => {
     try {
       await axios.post('/api/residents', { 
@@ -63,7 +70,7 @@ export default function Residents({ isAdminMode }) {
 
   const startEdit = (subsection) => {
     setEditingSection(subsection)
-    setEditingContent(sections[subsection] || '')
+    setEditingContent(getSectionContent(subsection))
   }
 
   if (loading) {
@@ -120,7 +127,7 @@ export default function Residents({ isAdminMode }) {
                 </div>
               ) : (
                 <p className="text-gray-700 whitespace-pre-line break-words leading-relaxed w-full">
-                  {sections[subsection] || DEFAULT_CONTENT[subsection] || 'No content yet.'}
+                  {sections[subsection] !== undefined ? sections[subsection] : DEFAULT_CONTENT[subsection] || 'No content yet.'}
                 </p>
               )}
             </div>

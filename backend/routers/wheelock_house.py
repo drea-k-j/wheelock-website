@@ -8,7 +8,7 @@ from schemas import SectionCreate, SectionResponse
 router = APIRouter(prefix="/api/wheelock-house", tags=["wheelock-house"])
 
 
-@router.get("/", response_model=list[SectionResponse])
+@router.get("", response_model=list[SectionResponse])
 def get_wheelock_house(db: Session = Depends(get_db)):
     return db.query(WheelockHouseSection).all()
 
@@ -21,7 +21,7 @@ def get_wheelock_house_subsection(subsection: str, db: Session = Depends(get_db)
     return db_section
 
 
-@router.post("/", response_model=SectionResponse)
+@router.post("", response_model=SectionResponse)
 def create_or_update_wheelock_house(section: SectionCreate, db: Session = Depends(get_db)):
     db_section = db.query(WheelockHouseSection).filter(WheelockHouseSection.subsection == section.subsection).first()
     if db_section:

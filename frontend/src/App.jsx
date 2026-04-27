@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Header from './components/Header'
-import Hero from './components/Hero'
 import Announcements from './components/Announcements'
 import About from './components/About'
 import WheelockHouse from './components/WheelockHouse'
@@ -24,7 +23,6 @@ function App() {
       
       {currentSection === 'home' && (
         <>
-          <Hero />
           <Announcements isAdminMode={isAdminMode} />
         </>
       )}

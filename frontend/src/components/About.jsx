@@ -60,6 +60,19 @@ export default function About({ isAdminMode }) {
     }
   }
 
+  const getSectionContent = (subsection) => {
+    if (sections[subsection] !== undefined && sections[subsection] !== null) {
+      return sections[subsection]
+    }
+    return DEFAULT_CONTENT[subsection] || ''
+  }
+
+  const pageIntroSubsection = subsections.find(subsection => {
+    const normalizedTitle = 'About Wheelock'.toLowerCase().trim()
+    const normalizedSubsection = subsection.toLowerCase().trim()
+    return normalizedTitle === normalizedSubsection || normalizedTitle.includes(normalizedSubsection)
+  })
+
   const handleSave = async (subsection) => {
     try {
       await axios.post('/api/about', { 
@@ -75,29 +88,77 @@ export default function About({ isAdminMode }) {
 
   const startEdit = (subsection) => {
     setEditingSection(subsection)
-    setEditingContent(sections[subsection] || '')
+    setEditingContent(getSectionContent(subsection))
   }
 
   if (loading) {
     return <section className="py-12 px-4 text-center"><p>Loading...</p></section>
   }
 
+  const introContent = pageIntroSubsection ? getSectionContent(pageIntroSubsection) : ''
+  const displayedSubsections = subsections.filter(subsection => subsection !== pageIntroSubsection)
+
   return (
     <section className="py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-wheelock-dark mb-8">About Wheelock</h1>
-        
+
+        {introContent ? (
+          <div className="mb-8 max-w-3xl rounded-xl border-l-4 border-wheelock-accent bg-white p-6 shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
+              <p className="text-xl leading-8 text-gray-800 whitespace-pre-wrap md:flex-1">
+                {editingSection === pageIntroSubsection ? (
+                  <textarea
+                    value={editingContent}
+                    onChange={(e) => setEditingContent(e.target.value)}
+                    rows="6"
+                    className="w-full border rounded px-3 py-2 font-sans"
+                  />
+                ) : (
+                  introContent
+                )}
+              </p>
+              {isAdminMode && editingSection !== pageIntroSubsection && (
+                <button
+                  onClick={() => startEdit(pageIntroSubsection)}
+                  className="text-wheelock-secondary hover:text-wheelock-accent text-sm self-start"
+                >
+                  Edit
+                </button>
+              )}
+            </div>
+            {editingSection === pageIntroSubsection && (
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleSave(pageIntroSubsection)}
+                  className="bg-success text-white px-4 py-2 rounded hover:opacity-90"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setEditingSection(null)}
+                  className="bg-gray-500 text-white px-4 py-2 rounded hover:opacity-90"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+          </div>
+        ) : null}
+
         {/* Photo gallery from About folder - cycles through images every 5 seconds */}
         <PhotoGallery page="about" className="mb-8" />
 
         <div className="grid gap-8">
-          {subsections.map(subsection => (
+          {displayedSubsections.map(subsection => (
             <div key={subsection} className="bg-wheelock-light border-l-4 border-wheelock-accent p-6 rounded shadow">
-              {subsection != 'About' ? <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
+              <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
                 <LinkableHeading level={2} className="text-2xl font-bold text-wheelock-dark">
                   {subsection}
                 </LinkableHeading>
-                {isAdminMode && editingSection !== subsection && (
+              </div>
+
+              {isAdminMode && editingSection !== subsection && (
                   <button 
                     onClick={(e) => {
                       e.stopPropagation()
@@ -108,7 +169,6 @@ export default function About({ isAdminMode }) {
                     Edit
                   </button>
                 )}
-              </div> : null}
 
               {editingSection === subsection ? (
                 <div className="space-y-3">
@@ -135,7 +195,7 @@ export default function About({ isAdminMode }) {
                 </div>
               ) : (
                 <p className="text-gray-700 whitespace-pre-wrap break-words leading-relaxed w-full">
-                  {sections[subsection] || DEFAULT_CONTENT[subsection] || 'No content yet.'}
+                  {sections[subsection] !== undefined ? sections[subsection] : DEFAULT_CONTENT[subsection] || 'No content yet.'}
                 </p>
               )}
             </div>

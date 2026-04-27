@@ -43,8 +43,8 @@ export const theme = {
 
   // Typography
   fonts: {
-    body: "system-ui, -apple-system, sans-serif",
-    heading: "system-ui, -apple-system, sans-serif",
+    body: "georgia, serif",
+    heading: "georgia, serif",
   },
 
   fontSize: {

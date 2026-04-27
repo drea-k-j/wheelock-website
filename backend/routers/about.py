@@ -9,7 +9,7 @@ import requests
 router = APIRouter(prefix="/api/about", tags=["about"])
 
 
-@router.get("/", response_model=list[SectionResponse])
+@router.get("", response_model=list[SectionResponse])
 def get_about(db: Session = Depends(get_db)):
     return db.query(AboutSection).all()
 
@@ -22,7 +22,7 @@ def get_about_subsection(subsection: str, db: Session = Depends(get_db)):
     return db_section
 
 
-@router.post("/", response_model=SectionResponse)
+@router.post("", response_model=SectionResponse)
 def create_or_update_about(section: SectionCreate, db: Session = Depends(get_db)):
     db_section = db.query(AboutSection).filter(AboutSection.subsection == section.subsection).first()
     if db_section:
