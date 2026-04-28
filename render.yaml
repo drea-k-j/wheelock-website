@@ -16,7 +16,7 @@ services:
       - key: ALLOWED_ORIGINS
         value: https://wheelock-frontend.onrender.com
 
-  - type: static
+  - type: static_site
     name: wheelock-frontend
     staticPublishPath: ./frontend/dist
     buildCommand: "cd frontend && npm install && npm run build"
