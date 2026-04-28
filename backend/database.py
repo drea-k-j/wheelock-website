@@ -7,7 +7,7 @@ DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./wheelock.db")
 
 if DATABASE_URL.startswith("postgresql"):
     # For PostgreSQL on Render
-    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg2://")
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg://")
 
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 
