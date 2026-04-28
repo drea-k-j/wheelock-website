@@ -16,12 +16,15 @@ services:
       - key: ALLOWED_ORIGINS
         value: https://wheelock-frontend.onrender.com
 
-  - type: static_site
+  - type: web
     name: wheelock-frontend
+    runtime: static
+    plan: free
     staticPublishPath: ./frontend/dist
     buildCommand: "cd frontend && npm install && npm run build"
     routes:
-      - path: "/*"
+      - type: rewrite
+        source: "/*"
         destination: /index.html
 
 databases:
