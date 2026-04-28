@@ -16,20 +16,23 @@ const caPath = process.platform === 'win32'
     ? path.join(os.homedir(), 'Library', 'Application Support', 'mkcert', 'rootCA.pem')
     : path.join(os.homedir(), '.local', 'share', 'mkcert', 'rootCA.pem')
 
+// Check if cert files exist
+const certsExist = fs.existsSync(keyPath) && fs.existsSync(certPath) && fs.existsSync(caPath)
+
 export default defineConfig({
   plugins: [react()],
   assetsInclude: ['**/*.JPG', '**/*.JPEG', '**/*.jpg', '**/*.jpeg'],
   server: {
-    https: {
+    https: certsExist ? {
       key: fs.readFileSync(keyPath),
       cert: fs.readFileSync(certPath),
       ca: fs.readFileSync(caPath),
-    },
+    } : false,
     proxy: {
       '/api': {
-        target: 'https://localhost:8000',
+        target: certsExist ? 'https://localhost:8000' : 'http://localhost:8000',
         changeOrigin: true,
-        secure: true,
+        secure: certsExist,
       }
     }
   }
