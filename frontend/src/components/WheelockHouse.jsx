@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '../api'
 import LinkableHeading from './LinkableHeading'
 import PhotoGallery from './PhotoGallery'
 
@@ -34,17 +34,17 @@ export default function WheelockHouse({ isAdminMode }) {
 
   const fetchConfig = async () => {
     try {
-      const response = await axios.get('/api/config/sections/wheelock-house')
+      const response = await api.get('/api/config/sections/wheelock-house')
       setSubsections(response.data.subsections || [])
     } catch (error) {
       console.error('Error fetching config:', error)
-      setSubsections(['About', 'Apply', 'Reservations'])
+      setSubsections(['Wheelock House', 'About', 'Apply', 'Reservations'])
     }
   }
 
   const fetchWheelockHouse = async () => {
     try {
-      const response = await axios.get('/api/wheelock-house')
+      const response = await api.get('/api/wheelock-house')
       const data = {}
       response.data.forEach(section => {
         data[section.subsection] = section.content
@@ -73,7 +73,7 @@ export default function WheelockHouse({ isAdminMode }) {
 
   const handleSave = async (subsection) => {
     try {
-      await axios.post('/api/wheelock-house', { 
+      await api.post('/api/wheelock-house', { 
         subsection, 
         content: editingContent 
       })

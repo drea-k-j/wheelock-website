@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '../api'
 import LinkableHeading from './LinkableHeading'
 
 const SUBSECTIONS = ['Manual', 'Application', 'Key Dates']
@@ -34,7 +34,7 @@ export default function Residents({ isAdminMode }) {
 
   const fetchResidents = async () => {
     try {
-      const response = await axios.get('/api/residents')
+      const response = await api.get('/api/residents')
       const data = {}
       response.data.forEach(section => {
         data[section.subsection] = section.content
@@ -57,7 +57,7 @@ export default function Residents({ isAdminMode }) {
 
   const handleSave = async (subsection) => {
     try {
-      await axios.post('/api/residents', { 
+      await api.post('/api/residents', { 
         subsection, 
         content: editingContent 
       })

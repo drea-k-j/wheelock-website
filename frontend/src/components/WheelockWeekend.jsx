@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '../api'
 import LinkableHeading from './LinkableHeading'
 import PhotoGallery from './PhotoGallery'
 
@@ -34,17 +34,17 @@ export default function WheelockWeekend({ isAdminMode }) {
 
   const fetchConfig = async () => {
     try {
-      const response = await axios.get('/api/config/sections/wheelock-weekend')
+      const response = await api.get('/api/config/sections/wheelock-weekend')
       setSubsections(response.data.subsections || [])
     } catch (error) {
       console.error('Error fetching config:', error)
-      setSubsections(['Schedule', 'Bios', 'Campus Map', 'Registration'])
+      setSubsections(['Wheelock Weekend', 'Schedule', 'Bios', 'Campus Map', 'Registration'])
     }
   }
 
   const fetchWheelockWeekend = async () => {
     try {
-      const response = await axios.get('/api/wheelock-weekend')
+      const response = await api.get('/api/wheelock-weekend')
       const data = {}
       response.data.forEach(section => {
         data[section.subsection] = section.content
@@ -77,7 +77,7 @@ export default function WheelockWeekend({ isAdminMode }) {
 
   const handleSave = async (subsection) => {
     try {
-      await axios.post('/api/wheelock-weekend', { 
+      await api.post('/api/wheelock-weekend', { 
         subsection, 
         content: editingContent 
       })

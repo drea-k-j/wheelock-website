@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '../api'
 import PhotoGallery from './PhotoGallery'
 
 export default function Announcements({ isAdminMode }) {
@@ -14,7 +14,7 @@ export default function Announcements({ isAdminMode }) {
 
   const fetchAnnouncements = async () => {
     try {
-      const response = await axios.get('/api/announcements')
+      const response = await api.get('/api/announcements')
       setAnnouncements(response.data)
     } catch (error) {
       console.error('Error fetching announcements:', error)
@@ -26,7 +26,7 @@ export default function Announcements({ isAdminMode }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post('/api/announcements', formData)
+      await api.post('/api/announcements', formData)
       setFormData({ title: '', content: '', is_featured: false })
       setShowForm(false)
       fetchAnnouncements()
@@ -38,7 +38,7 @@ export default function Announcements({ isAdminMode }) {
   const handleDelete = async (id) => {
     if (confirm('Delete this announcement?')) {
       try {
-        await axios.delete(`/api/announcements/${id}`)
+        await api.delete(`/api/announcements/${id}`)
         fetchAnnouncements()
       } catch (error) {
         console.error('Error deleting announcement:', error)

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '../api'
 import LinkableHeading from './LinkableHeading'
 
 const SUBSECTIONS = ['Sign-up']
@@ -31,7 +31,7 @@ export default function Newsletters({ isAdminMode }) {
 
   const fetchNewsletters = async () => {
     try {
-      const response = await axios.get('/api/newsletters')
+      const response = await api.get('/api/newsletters')
       const data = {}
       response.data.forEach(section => {
         data[section.subsection] = section.content
@@ -54,7 +54,7 @@ export default function Newsletters({ isAdminMode }) {
 
   const handleSave = async (subsection) => {
     try {
-      await axios.post('/api/newsletters', { 
+      await api.post('/api/newsletters', { 
         subsection, 
         content: editingContent 
       })

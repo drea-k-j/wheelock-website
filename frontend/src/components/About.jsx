@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '../api'
 import LinkableHeading from './LinkableHeading'
 import PhotoGallery from './PhotoGallery'
 
@@ -36,7 +36,7 @@ export default function About({ isAdminMode }) {
 
   const fetchConfig = async () => {
     try {
-      const response = await axios.get('/api/config/sections/about')
+      const response = await api.get('/api/config/sections/about')
       setSubsections(response.data.subsections || [])
     } catch (error) {
       console.error('Error fetching config:', error)
@@ -46,7 +46,7 @@ export default function About({ isAdminMode }) {
 
   const fetchAbout = async () => {
     try {
-      const response = await axios.get('/api/about')
+      const response = await api.get('/api/about')
       const data = {}
       response.data.forEach(section => {
         data[section.subsection] = section.content
@@ -75,7 +75,7 @@ export default function About({ isAdminMode }) {
 
   const handleSave = async (subsection) => {
     try {
-      await axios.post('/api/about', { 
+      await api.post('/api/about', { 
         subsection, 
         content: editingContent 
       })

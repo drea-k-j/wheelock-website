@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios from 'axios'
+import api from '../api'
 
 export default function Login({ isAdminMode, setIsAdminMode }) {
   const [showLoginModal, setShowLoginModal] = useState(false)
@@ -14,7 +14,7 @@ export default function Login({ isAdminMode, setIsAdminMode }) {
     setLoading(true)
 
     try {
-      const response = await axios.post('/api/auth/login', {
+      const response = await api.post('/api/auth/login', {
         username,
         password
       })
