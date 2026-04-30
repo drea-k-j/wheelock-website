@@ -8,7 +8,7 @@ const DEFAULT_CONTENT = {
   'Sign-up': 'Subscribe to our monthly newsletter to stay updated on Wheelock House events, announcements, and community news.\n\nEnter your email below to join our mailing list, or click the button to sign up directly.'
 }
 
-export default function Newsletters({ isAdminMode }) {
+export default function Newsletters() {
   const [sections, setSections] = useState({})
   const [loading, setLoading] = useState(true)
   const [editingSection, setEditingSection] = useState(null)

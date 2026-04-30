@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import api from '../api'
-import Login from './Login'
 
 const scrollToSubsection = (subsection) => {
   const id = subsection.toLowerCase().replace(/\s+/g, '-')
@@ -13,7 +12,7 @@ const clearHash = () => {
   }
 }
 
-export default function Header({ currentSection, setCurrentSection, isAdminMode, setIsAdminMode }) {
+export default function Header({ currentSection, setCurrentSection }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [expandedSection, setExpandedSection] = useState(null)
   const [sectionsConfig, setSectionsConfig] = useState(null)
@@ -45,7 +44,6 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
             The Wheelock Society
           </button>
           {error && <p className="text-error text-sm">Navigation unavailable</p>}
-          <Login isAdminMode={isAdminMode} setIsAdminMode={setIsAdminMode} />
         </div>
       </header>
     )
@@ -163,12 +161,9 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
           >
             Newsletters
           </button>
-
-          <Login isAdminMode={isAdminMode} setIsAdminMode={setIsAdminMode} />
         </nav>
 
         <div className="md:hidden flex items-center gap-4">
-          <Login isAdminMode={isAdminMode} setIsAdminMode={setIsAdminMode} />
           <button 
             onClick={() => setMenuOpen(!menuOpen)}
             className="text-2xl"
