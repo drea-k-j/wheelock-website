@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '../api'
 import Login from './Login'
 
 const scrollToSubsection = (subsection) => {
@@ -25,11 +25,11 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
 
   const fetchSectionsConfig = async () => {
     try {
-      const response = await axios.get('/api/config/sections')
+      const response = await api.get('/api/config/sections')
       setSectionsConfig(response.data)
     } catch (error) {
       console.error('Error fetching sections config:', error)
-      setError(error)
+      setError(error.message || 'Failed to load navigation')
     }
   }
 
