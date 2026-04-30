@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useState } from 'react'
 import Header from './components/Header'
 import Announcements from './components/Announcements'
 import About from './components/About'
@@ -12,10 +11,9 @@ import Admin from './pages/Admin'
 
 function App() {
   const [currentSection, setCurrentSection] = useState('home')
-  const location = useLocation()
 
   // Show admin page if on /admin route
-  if (location.pathname === '/admin') {
+  if (window.location.pathname === '/admin') {
     return <Admin />
   }
 
