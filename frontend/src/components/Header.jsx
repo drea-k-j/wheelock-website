@@ -12,7 +12,7 @@ const clearHash = () => {
   }
 }
 
-export default function Header({ currentSection, setCurrentSection }) {
+export default function Header({ currentSection, setCurrentSection, isAdminMode, setIsAdminMode, onAdminLogout }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [expandedSection, setExpandedSection] = useState(null)
   const [sectionsConfig, setSectionsConfig] = useState(null)
@@ -30,6 +30,11 @@ export default function Header({ currentSection, setCurrentSection }) {
       console.error('Error fetching sections config:', error)
       setError(error.message || 'Failed to load navigation')
     }
+  }
+
+  const handleLogout = () => {
+    onAdminLogout()
+    setMenuOpen(false)
   }
 
   // Don't render navigation if config fails to load
@@ -69,7 +74,8 @@ export default function Header({ currentSection, setCurrentSection }) {
   }
 
   return (
-    <header className="bg-wheelock-dark text-white sticky top-0 z-50 shadow-lg">
+    <>
+      <header className="bg-wheelock-dark text-white sticky top-0 z-50 shadow-lg">
       <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <button 
           onClick={() => {
@@ -161,9 +167,33 @@ export default function Header({ currentSection, setCurrentSection }) {
           >
             Newsletters
           </button>
+
+          {isAdminMode && (
+            <button 
+              onClick={handleLogout}
+              className="ml-4 bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition font-bold"
+            >
+              Logout
+            </button>
+          )}
         </nav>
 
         <div className="md:hidden flex items-center gap-4">
+          {isAdminMode ? (
+            <button 
+              onClick={handleLogout}
+              className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm font-bold"
+            >
+              Logout
+            </button>
+          ) : (
+            <a 
+              href="/admin"
+              className="bg-wheelock-accent hover:opacity-90 px-3 py-1 rounded text-sm font-bold text-wheelock-dark inline-block"
+            >
+              Login
+            </a>
+          )}
           <button 
             onClick={() => setMenuOpen(!menuOpen)}
             className="text-2xl"
@@ -291,5 +321,6 @@ export default function Header({ currentSection, setCurrentSection }) {
         </nav>
       )}
     </header>
+    </>
   )
 }

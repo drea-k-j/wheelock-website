@@ -9,7 +9,7 @@ const DEFAULT_CONTENT = {
   'Apply': 'To apply for a stay at Wheelock House, please send your application materials to wheelockhouse@example.com. Include your preferred dates, purpose of stay, and any accessibility needs. Applications are reviewed on a rolling basis.',
 }
 
-export default function WheelockHouse() {
+export default function WheelockHouse({ isAdminMode }) {
   const [sections, setSections] = useState({})
   const [subsections, setSubsections] = useState([])
   const [loading, setLoading] = useState(true)

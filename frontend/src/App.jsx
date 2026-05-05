@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Announcements from './components/Announcements'
 import About from './components/About'
@@ -11,10 +11,24 @@ import Admin from './pages/Admin'
 
 function App() {
   const [currentSection, setCurrentSection] = useState('home')
+  const [isAdminMode, setIsAdminMode] = useState(false)
+
+  // Check for admin token on mount
+  useEffect(() => {
+    const token = localStorage.getItem('admin_token')
+    if (token) {
+      setIsAdminMode(true)
+    }
+  }, [])
 
   // Show admin page if on /admin route
   if (window.location.pathname === '/admin') {
-    return <Admin />
+    return <Admin setIsAdminMode={setIsAdminMode} />
+  }
+
+  const handleAdminLogout = () => {
+    localStorage.removeItem('admin_token')
+    setIsAdminMode(false)
   }
 
   return (
@@ -22,22 +36,26 @@ function App() {
       <Header 
         currentSection={currentSection} 
         setCurrentSection={setCurrentSection}
+        isAdminMode={isAdminMode}
+        setIsAdminMode={setIsAdminMode}
+        onAdminLogout={handleAdminLogout}
       />
       
       {currentSection === 'home' && (
         <>
-          <Announcements />
+          <Announcements isAdminMode={isAdminMode} />
         </>
       )}
-      {currentSection === 'about' && <About />}
-      {currentSection === 'wheelock-house' && <WheelockHouse />}
-      {currentSection === 'wheelock-weekend' && <WheelockWeekend />}
-      {currentSection === 'residents' && <Residents />}
-      {currentSection === 'newsletters' && <Newsletters />}
+      {currentSection === 'about' && <About isAdminMode={isAdminMode} />}
+      {currentSection === 'wheelock-house' && <WheelockHouse isAdminMode={isAdminMode} />}
+      {currentSection === 'wheelock-weekend' && <WheelockWeekend isAdminMode={isAdminMode} />}
+      {currentSection === 'residents' && <Residents isAdminMode={isAdminMode} />}
+      {currentSection === 'newsletters' && <Newsletters isAdminMode={isAdminMode} />}
       
       <Footer />
     </div>
   )
 }
+
 
 export default App

@@ -9,7 +9,7 @@ const DEFAULT_CONTENT = {
   'Registration': 'For registration, please fill out the Google Form linked below or contact us at wheelock@example.com. Early registration is encouraged.'
 }
 
-export default function WheelockWeekend() {
+export default function WheelockWeekend({ isAdminMode }) {
   const [subsections, setSubsections] = useState([])
   const [sections, setSections] = useState({})
   const [loading, setLoading] = useState(true)

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import api from '../api'
 import PhotoGallery from './PhotoGallery'
 
-export default function Announcements() {
+export default function Announcements({ isAdminMode }) {
   const [announcements, setAnnouncements] = useState([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)

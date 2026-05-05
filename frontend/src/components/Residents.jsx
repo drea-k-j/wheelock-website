@@ -11,7 +11,7 @@ const DEFAULT_CONTENT = {
   'Key Dates': 'Application Deadline TBA\nDecision Notifications TBA'
 }
 
-export default function Residents() {
+export default function Residents({ isAdminMode }) {
   const [sections, setSections] = useState({})
   const [loading, setLoading] = useState(true)
   const [editingSection, setEditingSection] = useState(null)

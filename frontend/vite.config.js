@@ -23,11 +23,7 @@ export default defineConfig({
   plugins: [react()],
   assetsInclude: ['**/*.JPG', '**/*.JPEG', '**/*.jpg', '**/*.jpeg'],
   server: {
-    https: certsExist ? {
-      key: fs.readFileSync(keyPath),
-      cert: fs.readFileSync(certPath),
-      ca: fs.readFileSync(caPath),
-    } : false,
+    https: false,
     proxy: {
       '/api': {
         target: certsExist ? 'https://localhost:8000' : 'http://localhost:8000',
