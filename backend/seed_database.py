@@ -6,11 +6,11 @@ Usage (local):
     DATABASE_URL="postgresql://user:pass@localhost/dbname" python seed_database.py
 
 Usage (Render):
-    Add preDeployCommand to render.yaml or set it in Render dashboard
+    Seeding runs automatically on app startup
 """
 
-import psycopg2
-from psycopg2.extras import execute_values
+import psycopg
+from psycopg import sql
 import os
 import sys
 from urllib.parse import urlparse
@@ -99,10 +99,10 @@ Move-out: November 25'''),
         parsed = urlparse(database_url)
         
         # Connect to the database
-        conn = psycopg2.connect(
+        conn = psycopg.connect(
             host=parsed.hostname,
             port=parsed.port or 5432,
-            database=parsed.path[1:],
+            dbname=parsed.path[1:],
             user=parsed.username,
             password=parsed.password,
             sslmode='require' if 'render.com' in (parsed.hostname or '') else 'prefer'
@@ -116,45 +116,52 @@ Move-out: November 25'''),
         
         if existing_rows > 0:
             print("✓ Database already populated with content (skipping seed)")
+            conn.close()
             return True
         
         # Insert content into each table
         for table, data in content_data.items():
             if table == 'announcements':
                 # Special handling for announcements (has title, content, is_featured)
-                query = f"INSERT INTO {table} (title, content, is_featured) VALUES %s ON CONFLICT DO NOTHING"
-                # data should be tuples like (title, content, is_featured)
+                for row in data:
+                    cursor.execute(
+                        f"INSERT INTO {table} (title, content, is_featured) VALUES (%s, %s, %s) ON CONFLICT DO NOTHING",
+                        row
+                    )
             else:
                 # For section tables (subsection, content)
-                query = f"INSERT INTO {table} (subsection, content) VALUES %s ON CONFLICT (subsection) DO UPDATE SET content = EXCLUDED.content"
+                for row in data:
+                    cursor.execute(
+                        f"INSERT INTO {table} (subsection, content) VALUES (%s, %s) ON CONFLICT (subsection) DO UPDATE SET content = EXCLUDED.content",
+                        row
+                    )
             
-            if data:
-                execute_values(cursor, query, data, page_size=len(data))
-                print(f"✓ Inserted {len(data)} rows into {table}")
+            print(f"✓ Inserted {len(data)} rows into {table}")
         
         conn.commit()
+        conn.close()
         print("\n✓ Database seeded successfully!")
         return True
         
-    except psycopg2.OperationalError as e:
+    except psycopg.OperationalError as e:
         print(f"✗ Connection error: {e}")
         print("  Check that DATABASE_URL is correct and the database is accessible")
         return False
-    except psycopg2.DatabaseError as e:
+    except psycopg.DatabaseError as e:
         print(f"✗ Database error: {e}")
         if conn:
             conn.rollback()
+            conn.close()
         return False
     except Exception as e:
         print(f"✗ Error seeding database: {e}")
         if conn:
-            conn.rollback()
+            try:
+                conn.rollback()
+                conn.close()
+            except:
+                pass
         return False
-    finally:
-        if cursor:
-            cursor.close()
-        if conn:
-            conn.close()
 
 
 if __name__ == "__main__":
