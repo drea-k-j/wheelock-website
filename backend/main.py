@@ -3,8 +3,9 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
-from database import engine, Base
+from database import engine, Base, SessionLocal
 from routers import announcements, about, wheelock_house, wheelock_weekend, residents, newsletters, auth, config, photos
+from seed_database import seed_database
 import os
 
 # Create all database tables
@@ -37,6 +38,17 @@ app.include_router(wheelock_weekend.router)
 app.include_router(residents.router)
 app.include_router(newsletters.router)
 # app.include_router(photos.router)
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Seed the database on startup if it's empty"""
+    database_url = os.getenv("DATABASE_URL")
+    if database_url:
+        print("🌱 Checking if database needs seeding...")
+        seed_database(database_url)
+    else:
+        print("⚠️  DATABASE_URL not set, skipping seeding")
 
 
 @app.get("/api/health")

@@ -5,7 +5,6 @@ services:
     plan: free
     runtime: python
     buildCommand: "pip install -r backend/requirements.txt"
-    preDeployCommand: "echo '>>> Starting database seed...' && cd backend && python seed_database.py && echo '>>> Database seed complete'"
     startCommand: "cd backend && uvicorn main:app --host 0.0.0.0 --port 8000"
     envVars:
       - key: SECRET_KEY

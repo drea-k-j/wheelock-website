@@ -18,11 +18,14 @@ from urllib.parse import urlparse
 
 def seed_database(database_url, content_data=None):
     """
-    Seed the database with initial content
+    Seed the database with initial content (idempotent - only seeds if empty)
     
     Args:
         database_url (str): Database connection URL
         content_data (dict): Optional content to insert. If None, uses defaults.
+    
+    Returns:
+        bool: True if seeding succeeded or was skipped (database already has content)
     """
     
     if not database_url:
@@ -106,6 +109,14 @@ Move-out: November 25'''),
         )
         
         cursor = conn.cursor()
+        
+        # Check if database already has content (idempotency check)
+        cursor.execute("SELECT COUNT(*) FROM about_sections")
+        existing_rows = cursor.fetchone()[0]
+        
+        if existing_rows > 0:
+            print("✓ Database already populated with content (skipping seed)")
+            return True
         
         # Insert content into each table
         for table, data in content_data.items():
