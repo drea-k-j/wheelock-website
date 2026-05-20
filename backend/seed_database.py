@@ -147,6 +147,8 @@ Move-out: November 25'''),
 
 
 if __name__ == "__main__":
+    print("🌱 [Seed Script] Starting database seed process...")
+    
     # Get database URL from environment
     database_url = os.getenv("DATABASE_URL")
     
@@ -160,5 +162,13 @@ if __name__ == "__main__":
         print("  DATABASE_URL='your_db_url' python seed_database.py")
         sys.exit(1)
     
+    print(f"✓ [Seed Script] DATABASE_URL found (connecting to {database_url.split('@')[1] if '@' in database_url else 'database'}...)")
+    
     success = seed_database(database_url)
-    sys.exit(0 if success else 1)
+    
+    if success:
+        print("✓ [Seed Script] Seed process completed successfully")
+        sys.exit(0)
+    else:
+        print("✗ [Seed Script] Seed process failed")
+        sys.exit(1)
