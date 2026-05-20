@@ -37,60 +37,65 @@ def seed_database(database_url, content_data=None):
         content_data = {
             'about_sections': [
                 ('About', 'The Wheelock Society is Dartmouth\'s ecumenical Christian alumni network. We support student-led initiatives that foster the integration of faith, reason, vocation, and service at the College.'),
-                ('History', '''<ul>
-<li><strong>2006:</strong> Students found <a href="https://dartmouthapologia.org">the <em>Apologia</em>, Dartmouth\'s undergraduate journal of Christian thought</a>.</li>
-<li><strong>2009:</strong> Alumni found the Wheelock Society to partner with <em>Apologia</em> and catalyze similar initiatives.</li>
-<li><strong>2010:</strong> Inaugural Wheelock Conference—now Wheelock Weekend. Launch of the Waterman Institute—now Vox Veritatis—Dartmouth\'s student affiliate for both <a href="https://www.veritas.org">the Veritas Forum</a> and <a href="https://thomisticinstitute.org">the Thomistic Institute</a>.</li>
-<li><strong>2015:</strong> Wheelock House purchased.</li>
-<li><strong>2022:</strong> Wheelock House opens for residents.</li>
-<li><strong>2025:</strong> Wheelock House opens to the public.</li>
-</ul>'''),
-                ('Leadership', '''Charlie Clark \'11, Executive Director (charlie@wheelocksociety.org)
-Bruce McKenzie \'81, Chairman
-Gregg Fairbrothers \'76
-Anne McCune \'79
-Beth Johnston Stephenson \'82
-Louis Tucker \'95
-Adrian Ng \'05
-Andrew Schuman \'10
-Hilary Johnson \'15
-Nathaniel Schmucker \'15
-Sara Holston \'17
-Nico Allison \'28
-Lauren Yoon \'28
-Clara Yuo \'29
+                ('History', '''- **2006:** Students found [the *Apologia*, Dartmouth's undergraduate journal of Christian thought](https://dartmouthapologia.org)
+- **2009:** Alumni found the Wheelock Society to partner with *Apologia* and catalyze similar initiatives
+- **2010:** Inaugural Wheelock Conference—now Wheelock Weekend. Launch of the Waterman Institute—now Vox Veritatis—Dartmouth's student affiliate for both [the Veritas Forum](https://www.veritas.org) and [the Thomistic Institute](https://thomisticinstitute.org)
+- **2015:** Wheelock House purchased
+- **2022:** Wheelock House opens for residents
+- **2025:** Wheelock House opens to the public'''),
+                ('Leadership', '''Charlie Clark '11, Executive Director (charlie@wheelocksociety.org)
+Bruce McKenzie '81, Chairman
+Gregg Fairbrothers '76
+Anne McCune '79
+Beth Johnston Stephenson '82
+Louis Tucker '95
+Adrian Ng '05
+Andrew Schuman '10
+Hilary Johnson '15
+Nathaniel Schmucker '15
+Sara Holston '17
+Nico Allison '28
+Lauren Yoon '28
+Clara Yuo '29
 Prof. Lindsay Whaley'''),
             ],
             'wheelock_weekend': [
-                ('Wheelock Weekend', 'Thank you for coming to Wheelock Weekend 2026!\n\nThe Wheelock Weekend takes place every April. Christian alumni return to Hanover for three days of fellowship with current students and one another. Photos from past events are available in our gallery.'),
-                ('Date & Registration', '<a href="https://docs.google.com/forms/d/e/1FAIpQLSffZGeMI-imbABd0QWK6Be1DEDxd_w9cFE5xFcoBcivXLRDAw/viewform?usp=header">Register for Wheelock Weekend</a>'),
-                ('Schedule', 'Full schedule coming soon. Please refer to <a href="https://maps.google.com">campus map</a> for event locations and directions.'),
+                ('Wheelock Weekend', 'The Wheelock Weekend takes place every April. Christian alumni return to Hanover for three days of fellowship with current students and one another. Photos from past events are available in our gallery.'),
+                ('Date & Registration', '[Register for Wheelock Weekend](https://docs.google.com/forms/d/e/1FAIpQLSffZGeMI-imbABd0QWK6Be1DEDxd_w9cFE5xFcoBcivXLRDAw/viewform?usp=header)'),
+                ('Schedule', 'Full schedule coming soon. Please refer to [campus map](https://maps.google.com) for event locations and directions.'),
                 ('Speaker Bios', 'Speaker bios and headshots coming soon.'),
-                ('Campus Map', '<a href="https://drive.google.com/file/d/1X1zse-oQVrGseYz0NkrsR6ZWLHSI_o2y/view?usp=share_link">View Campus Map</a>'),
+                ('Campus Map', '[View Campus Map](https://drive.google.com/file/d/1X1zse-oQVrGseYz0NkrsR6ZWLHSI_o2y/view?usp=share_link)'),
             ],
             'wheelock_house': [
                 ('Wheelock House', 'The Wheelock House is Dartmouth\'s Christian living learning community and study center. Built in 1773 as the personal home of Dartmouth\'s founding president, Eleazar Wheelock, it now serves as an intentional Christian community. Photos and more information available in our gallery.'),
                 ('About', 'Built in 1773 as the personal home of Dartmouth\'s founding president, Eleazar Wheelock, the Wheelock House is a Christian intentional community with 24 residential members. Residents attend weekly dinner discussions with Christian faculty and alumni, participate in spiritual retreats, and inhabit formative rhythms of work and prayer. The ground-floor study center at the House includes a lecture hall, library, seminar room, and café, all open to the public and offering numerous hospitality opportunities throughout the week.'),
-                ('Reservations', '<p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdAT6EVv761wOPRQ0eK4amheye-onepnT0NzXX4lnzMnG9ACw/viewform?usp=header">Request to reserve a public space at the Wheelock House</a> (Check the calendar below for availability.)</p><p>Google Calendar: <iframe src="https://calendar.google.com/calendar/embed?src=d2hlZWxvY2tzb2NpZXR5QGdtYWlsLmNvbQ" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe></p>'),
-                ('Apply', '<a href="https://drive.google.com/file/d/1X1zse-oQVrGseYz0NkrsR6ZWLHSI_o2y/view?usp=share_link">Apply to live at the Wheelock House</a>'),
-                ('Learn More', '<a href="https://cscmovement.org">Learn more about the Christian study center movement</a>'),
+                ('Reservations', '''[Request to reserve a public space at the Wheelock House](https://docs.google.com/forms/d/e/1FAIpQLSdAT6EVv761wOPRQ0eK4amheye-onepnT0NzXX4lnzMnG9ACw/viewform?usp=header)
+
+Check the calendar below for availability.
+
+[View Google Calendar](https://calendar.google.com/calendar/u/1?cid=d2hlZWxvY2tzb2NpZXR5QGdtYWlsLmNvbQ)'''),
+                ('Apply', '[Apply to live at the Wheelock House](https://drive.google.com/file/d/1X1zse-oQVrGseYz0NkrsR6ZWLHSI_o2y/view?usp=share_link)'),
+                ('Learn More', '[Learn more about the Christian study center movement](https://cscmovement.org)'),
             ],
             'residents': [
-                ('Manual', '<a href="/assets/residents-manual.pdf">Residents\' Manual</a>'),
-                ('Key Dates', '''Summer 26S (Spring 2026)
-Move-in: March 19
-Move-out: June 15
+                ('Manual', '[Residents\' Manual](/assets/residents-manual.pdf)'),
+                ('Key Dates', '''**Summer 26S (Spring 2026)**
+- Move-in: March 19
+- Move-out: June 15
 
-Summer 26X (Summer 2026)
-Move-in: June 16
-Move-out: September 2
+**Summer 26X (Summer 2026)**
+- Move-in: June 16
+- Move-out: September 2
 
-Fall 2026
-Move-in: September 5
-Move-out: November 25'''),
+**Fall 2026**
+- Move-in: September 5
+- Move-out: November 25'''),
             ],
             'newsletters': [
-                ('Sign-up', '<p>Sign up for our newsletter to receive updates about Wheelock House events, speakers, and opportunities.</p><p><a href="https://lp.constantcontactpages.com/su/apx8wmX/monthly">Subscribe to Monthly Updates</a></p><p><a href="https://lp.constantcontactpages.com/sl/K7WxNQv/quarterly">Subscribe to Quarterly Updates</a></p>'),
+                ('Sign-up', '''Sign up for our newsletter to receive updates about Wheelock House events, speakers, and opportunities.
+
+- [Subscribe to Monthly Updates](https://lp.constantcontactpages.com/su/apx8wmX/monthly)
+- [Subscribe to Quarterly Updates](https://lp.constantcontactpages.com/sl/K7WxNQv/quarterly)'''),
             ],
         }
     
