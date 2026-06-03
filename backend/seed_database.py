@@ -61,7 +61,7 @@ Prof. Lindsay Whaley'''),
             ],
             'wheelock_weekend': [
                 ('Wheelock Weekend', 'The Wheelock Weekend takes place every April. Christian alumni return to Hanover for three days of fellowship with current students and one another. Photos from past events are available in our gallery.'),
-                ('Date & Registration', '[Register for Wheelock Weekend](https://docs.google.com/forms/d/e/1FAIpQLSffZGeMI-imbABd0QWK6Be1DEDxd_w9cFE5xFcoBcivXLRDAw/viewform?usp=header)'),
+                ('Date & Registration', '''<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSffZGeMI-imbABd0QWK6Be1DEDxd_w9cFE5xFcoBcivXLRDAw/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0" style="border-radius:8px">Loading...</iframe>'''),
                 ('Schedule', 'Full schedule coming soon. Please refer to [campus map](https://maps.google.com) for event locations and directions.'),
                 ('Speaker Bios', 'Speaker bios and headshots coming soon.'),
                 ('Campus Map', '[View Campus Map](https://drive.google.com/file/d/1X1zse-oQVrGseYz0NkrsR6ZWLHSI_o2y/view?usp=share_link)'),
@@ -73,7 +73,7 @@ Prof. Lindsay Whaley'''),
 
 Check the calendar below for availability.
 
-[View Google Calendar](https://calendar.google.com/calendar/u/1?cid=d2hlZWxvY2tzb2NpZXR5QGdtYWlsLmNvbQ)'''),
+<iframe src="https://calendar.google.com/calendar/embed?src=d2hlZWxvY2tzb2NpZXR5QGdtYWlsLmNvbQ" style="border:0;border-radius:8px" width="100%" height="600" frameborder="0" scrolling="no"></iframe>'''),
                 ('Apply', '[Apply to live at the Wheelock House](https://drive.google.com/file/d/1X1zse-oQVrGseYz0NkrsR6ZWLHSI_o2y/view?usp=share_link)'),
                 ('Learn More', '[Learn more about the Christian study center movement](https://cscmovement.org)'),
             ],

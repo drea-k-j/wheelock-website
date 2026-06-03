@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import api from '../api'
 import LinkableHeading from './LinkableHeading'
+import MarkdownContent from './MarkdownContent'
 
 const SUBSECTIONS = ['Sign-up']
 
@@ -124,9 +125,9 @@ export default function Newsletters({ isAdminMode }) {
                 </div>
               ) : (
                 <div>
-                  <p className="text-gray-700 whitespace-pre-line break-words leading-relaxed w-full mb-4">
-                    {sections[subsection] !== undefined ? sections[subsection] : DEFAULT_CONTENT[subsection] || 'No content yet.'}
-                  </p>
+                  <MarkdownContent 
+                    content={sections[subsection] !== undefined ? sections[subsection] : DEFAULT_CONTENT[subsection] || 'No content yet.'}
+                  />
                   
                   {!isAdminMode && (
                     <div className="mt-4">

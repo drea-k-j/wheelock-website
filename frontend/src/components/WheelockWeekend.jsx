@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import api from '../api'
 import LinkableHeading from './LinkableHeading'
 import PhotoGallery from './PhotoGallery'
+import MarkdownContent from './MarkdownContent'
 
 const DEFAULT_CONTENT = {
   'Wheelock Weekend': 'Wheelock Weekend brings alumni, students, and guests together for a full schedule of events, meals, and debrief sessions. Stay connected, learn about campus resources, and experience the Wheelock community.',
@@ -96,9 +97,7 @@ export default function WheelockWeekend({ isAdminMode }) {
   const renderSectionContent = (subsection) => {
     const content = sections[subsection] !== undefined ? sections[subsection] : DEFAULT_CONTENT[subsection] || 'No content yet.'
     const textContent = (
-      <p className="text-gray-700 whitespace-pre-line break-words leading-relaxed w-full">
-        {content}
-      </p>
+      <MarkdownContent content={content} />
     )
 
     if (subsection === 'Campus Map') {

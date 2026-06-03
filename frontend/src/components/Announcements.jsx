@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import api from '../api'
 import PhotoGallery from './PhotoGallery'
+import MarkdownContent from './MarkdownContent'
 
 export default function Announcements({ isAdminMode }) {
   const [announcements, setAnnouncements] = useState([])
@@ -114,7 +115,7 @@ export default function Announcements({ isAdminMode }) {
                     {announcement.is_featured && (
                       <span className="inline-block bg-wheelock-accent text-white text-xs px-2 py-1 rounded mb-2">Featured</span>
                     )}
-                    <p className="text-gray-700 whitespace-pre-wrap">{announcement.content}</p>
+                    <MarkdownContent content={announcement.content} />
                     <p className="text-sm text-gray-600 mt-3">
                       {new Date(announcement.created_at).toLocaleDateString()}
                     </p>

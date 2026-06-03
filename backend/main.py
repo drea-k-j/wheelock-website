@@ -8,8 +8,7 @@ from routers import announcements, about, wheelock_house, wheelock_weekend, resi
 from seed_database import seed_database
 import os
 
-# Create all database tables
-Base.metadata.create_all(bind=engine)
+# Tables will be created on startup (moved from here)
 
 CERT_DIR = Path(__file__).resolve().parent.parent / 'certs'
 KEYFILE = CERT_DIR / 'localhost-key.pem'
@@ -42,7 +41,16 @@ app.include_router(newsletters.router)
 
 @app.on_event("startup")
 async def startup_event():
-    """Seed the database on startup if it's empty"""
+    """Create tables and seed database on startup"""
+    try:
+        # Create all database tables first
+        Base.metadata.create_all(bind=engine)
+        print("✓ Database tables created/verified")
+    except Exception as e:
+        print(f"⚠️  Error creating tables: {e}")
+        return
+    
+    # Then seed the database if it's empty
     database_url = os.getenv("DATABASE_URL")
     if database_url:
         print("🌱 Checking if database needs seeding...")
