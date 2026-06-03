@@ -1,4 +1,5 @@
 import ReactMarkdown from 'react-markdown'
+import rehypeRaw from 'rehype-raw'
 
 /**
  * MarkdownContent component renders markdown for subsection bodies.
@@ -7,6 +8,7 @@ import ReactMarkdown from 'react-markdown'
 export default function MarkdownContent({ content, className = '' }) {
   return (
     <ReactMarkdown 
+      rehypePlugins={[rehypeRaw]}
       allowedElements={['h1', 'h2', 'h3', 'p', 'strong', 'em', 'ul', 'ol', 'li', 'a', 'img', 'iframe', 'br', 'code', 'pre', 'div']}
       className={`prose prose-sm max-w-none ${className}`}
     >
