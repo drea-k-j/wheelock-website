@@ -62,22 +62,34 @@ def seed_database(database_url, content_data=None):
             'wheelock_weekend': [
                 ('Wheelock Weekend', 'The Wheelock Weekend takes place every April. Christian alumni return to Hanover for three days of fellowship with current students and one another. Photos from past events are available in our gallery.'),
                 ('Date & Registration', 'Registration will be available as the next weekend approaches.'),
-                ('Schedule', 'Full schedule coming soon. Please refer to [campus map](https://maps.google.com) for event locations and directions.'),
+                ('Schedule', 'Full schedule coming soon. Please refer to the [campus map](https://drive.google.com/file/d/1X1zse-oQVrGseYz0NkrsR6ZWLHSI_o2y/view?usp=share_link) for event locations and directions.'),
                 ('Speaker Bios', 'Speaker bios and headshots coming soon.'),
                 ('Campus Map', '[View Campus Map](https://drive.google.com/file/d/1X1zse-oQVrGseYz0NkrsR6ZWLHSI_o2y/view?usp=share_link)'),
             ],
             'wheelock_house': [
                 ('Wheelock House', 'The Wheelock House is Dartmouth\'s Christian living learning community and study center. Built in 1773 as the personal home of Dartmouth\'s founding president, Eleazar Wheelock, it now serves as an intentional Christian community. Photos and more information available in our gallery.'),
                 ('About', 'Built in 1773 as the personal home of Dartmouth\'s founding president, Eleazar Wheelock, the Wheelock House is a Christian intentional community with 24 residential members. Residents attend weekly dinner discussions with Christian faculty and alumni, participate in spiritual retreats, and inhabit formative rhythms of work and prayer. The ground-floor study center at the House includes a lecture hall, library, seminar room, and café, all open to the public and offering numerous hospitality opportunities throughout the week.'),
-                ('Reservations', '''Check the calendar below for availability to reserve a public space.
+                ('Reservations', '''To request to reserve a public space at the Wheelock House, fill out the form below. Check the calendar for availability.
 
 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdAT6EVv761wOPRQ0eK4amheye-onepnT0NzXX4lnzMnG9ACw/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0" style="border-radius:8px">Loading...</iframe>
 
 <iframe src="https://calendar.google.com/calendar/embed?src=d2hlZWxvY2tzb2NpZXR5QGdtYWlsLmNvbQ" style="border:0;border-radius:8px" width="100%" height="600" frameborder="0" scrolling="no"></iframe>'''),
-                ('Apply', '''<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfexNfJZe9epXDnJ3qr4m8Xh_HanQnn6maFMRTwHRXa7RRX0w/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0" style="border-radius:8px">Loading...</iframe>'''),
                 ('Learn More', '[Learn more about the Christian study center movement](https://cscmovement.org)'),
             ],
-            'residents': [],
+            'residents': [
+                ('Manual', '[Residents\' Manual](/assets/residents-manual.pdf)'),
+                ('Key Dates', '''**Summer 26S (Spring 2026)**
+- Move-in: March 19
+- Move-out: June 15
+
+**Summer 26X (Summer 2026)**
+- Move-in: June 16
+- Move-out: September 2
+
+**Fall 2026**
+- Move-in: September 5
+- Move-out: November 25'''),
+            ],
             'newsletters': [
                 ('Sign-up', 'Sign up for our newsletter to receive updates about Wheelock House events, speakers, and opportunities.'),
             ],
