@@ -9,9 +9,9 @@ export const theme = {
   // Color Palette
   colors: {
     primary: "#00693e",      // Wheelock dark green
-    secondary: "#c4dd88",    // Wheelock accent (light green/yellow)
+    secondary: "#72c400",    // Wheelock accent (light green/yellow)
     background: "#e2e2e2",   // Wheelock light gray
-    background_alt: "#f7f7f7", // Slightly lighter gray
+    background_alt: "#f1f1f1", // Top-box background tone between white and subsection gray
     text: {
       primary: "#000000",    // black
       secondary: "#12312b",  // dark green

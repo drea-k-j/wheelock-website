@@ -49,7 +49,7 @@ export default function Announcements({ isAdminMode }) {
 
   return (
     <section className="py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold text-wheelock-dark mb-8">Announcements</h2>
         
         {/* Photo gallery from Announcements folder - cycles through images every 5 seconds */}
@@ -82,14 +82,6 @@ export default function Announcements({ isAdminMode }) {
                   className="w-full border rounded px-3 py-2"
                   required
                 />
-                <label className="flex items-center gap-2">
-                  <input 
-                    type="checkbox"
-                    checked={formData.is_featured}
-                    onChange={(e) => setFormData({...formData, is_featured: e.target.checked})}
-                  />
-                  <span>Featured on homepage</span>
-                </label>
                 <button 
                   type="submit"
                   className="bg-success text-white px-4 py-2 rounded hover:opacity-90 transition"
@@ -112,9 +104,6 @@ export default function Announcements({ isAdminMode }) {
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-wheelock-dark mb-2">{announcement.title}</h3>
-                    {announcement.is_featured && (
-                      <span className="inline-block bg-wheelock-accent text-white text-xs px-2 py-1 rounded mb-2">Featured</span>
-                    )}
                     <MarkdownContent content={announcement.content} />
                     <p className="text-sm text-gray-600 mt-3">
                       {new Date(announcement.created_at).toLocaleDateString()}

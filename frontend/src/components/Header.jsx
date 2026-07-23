@@ -12,6 +12,8 @@ const clearHash = () => {
   }
 }
 
+const normalizeName = (value) => (value || '').toLowerCase().replace(/[^a-z0-9]+/g, '').trim()
+
 export default function Header({ currentSection, setCurrentSection, isAdminMode, setIsAdminMode, onAdminLogout }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [expandedSection, setExpandedSection] = useState(null)
@@ -41,10 +43,10 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
   if (error || !sectionsConfig) {
     return (
       <header className="bg-wheelock-dark text-white sticky top-0 z-50 shadow-lg">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <button 
             onClick={() => setCurrentSection('home')}
-            className="text-2xl font-bold hover:text-wheelock-light transition"
+            className="text-2xl font-bold hover:text-wheelock-light transition whitespace-nowrap"
           >
             The Wheelock Society
           </button>
@@ -55,48 +57,51 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
   }
 
   const renderSubsectionButtons = (sectionKey, subsections, isMobile = false) => {
-    return subsections.map(sub => (
-      <button
-        key={sub}
-        onClick={() => {
-          setCurrentSection(sectionKey)
-          setTimeout(() => scrollToSubsection(sub), 0)
-          if (isMobile) {
-            setMenuOpen(false)
-            setExpandedSection(null)
-          }
-        }}
-        className={isMobile ? "px-2 py-1 text-sm hover:bg-gray-700 rounded text-left" : "w-full text-left px-4 py-2 hover:bg-wheelock-accent transition first:rounded-t last:rounded-b"}
-      >
-        {sub}
-      </button>
-    ))
+    const normalizedSectionKey = normalizeName(sectionKey)
+
+    return subsections
+      .filter(sub => normalizeName(sub) !== normalizedSectionKey)
+      .map(sub => (
+        <button
+          key={sub}
+          onClick={() => {
+            setCurrentSection(sectionKey)
+            setTimeout(() => scrollToSubsection(sub), 0)
+            if (isMobile) {
+              setMenuOpen(false)
+              setExpandedSection(null)
+            }
+          }}
+          className={isMobile ? "px-2 py-1 text-sm hover:bg-gray-700 rounded text-left block" : "w-full block text-left px-4 py-2 hover:bg-wheelock-accent transition first:rounded-t last:rounded-b"}
+        >
+          {sub}
+        </button>
+      ))
   }
 
   return (
     <>
-      <header className="bg-wheelock-dark text-white sticky top-0 z-50 shadow-lg">
-      <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <header className="bg-wheelock-dark text-white sticky top-0 z-50 shadow-lg">      <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-3">
         <button 
           onClick={() => {
             clearHash()
             setCurrentSection('home')
             setMenuOpen(false)
           }}
-          className="text-2xl font-bold hover:text-wheelock-light transition"
+            className="text-xl sm:text-2xl md:text-3xl font-bold hover:text-wheelock-light transition whitespace-nowrap mr-4 flex-shrink-0"
         >
           The Wheelock Society
         </button>
 
-        <nav className="hidden md:flex gap-6 items-center">
+        <nav className="hidden md:flex flex-1 min-w-0 flex-wrap gap-3 items-center whitespace-nowrap text-[clamp(0.9rem,1vw,1rem)] overflow-visible">
           <button 
             onClick={() => {
               clearHash()
               setCurrentSection('home')
             }}
-            className={`px-3 py-2 rounded transition ${currentSection === 'home' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
+            className={`px-2 py-2 rounded text-sm sm:px-3 sm:py-2 transition whitespace-nowrap ${currentSection === 'home' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
           >
-            Home
+            Announcements
           </button>
           
           <div className="relative group">
@@ -105,11 +110,11 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
                 clearHash()
                 setCurrentSection('about')
               }}
-              className={`px-3 py-2 rounded transition ${currentSection === 'about' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
+              className={`px-2 py-2 rounded text-sm sm:px-3 sm:py-2 transition ${currentSection === 'about' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
             >
               About
             </button>
-            <div className="absolute left-0 mt-0 w-40 bg-gray-700 text-white rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+            <div className="absolute left-0 top-full mt-2 min-w-[10rem] bg-gray-700 text-white rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 flex flex-col">
               {renderSubsectionButtons('about', sectionsConfig.about.subsections)}
             </div>
           </div>
@@ -120,11 +125,11 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
                 clearHash()
                 setCurrentSection('wheelock-house')
               }}
-              className={`px-3 py-2 rounded transition ${currentSection === 'wheelock-house' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
+              className={`px-2 py-2 rounded text-sm sm:px-3 sm:py-2 transition ${currentSection === 'wheelock-house' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
             >
               Wheelock House
             </button>
-            <div className="absolute left-0 mt-0 w-40 bg-gray-700 text-white rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+            <div className="absolute left-0 top-full mt-2 min-w-[10rem] bg-gray-700 text-white rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 flex flex-col">
               {renderSubsectionButtons('wheelock-house', sectionsConfig['wheelock-house'].subsections)}
             </div>
           </div>
@@ -135,11 +140,11 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
                 clearHash()
                 setCurrentSection('wheelock-weekend')
               }}
-              className={`px-3 py-2 rounded transition ${currentSection === 'wheelock-weekend' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
+              className={`px-2 py-2 rounded text-sm sm:px-3 sm:py-2 transition ${currentSection === 'wheelock-weekend' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
             >
               Wheelock Weekend
             </button>
-            <div className="absolute left-0 mt-0 w-40 bg-gray-700 text-white rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+            <div className="absolute left-0 top-full mt-2 min-w-[10rem] bg-gray-700 text-white rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 flex flex-col">
               {renderSubsectionButtons('wheelock-weekend', sectionsConfig['wheelock-weekend'].subsections)}
             </div>
           </div>
@@ -150,49 +155,50 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
                 clearHash()
                 setCurrentSection('residents')
               }}
-              className={`px-3 py-2 rounded transition ${currentSection === 'residents' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
+              className={`px-2 py-2 rounded text-sm sm:px-3 sm:py-2 transition ${currentSection === 'residents' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
             >
               Residents
             </button>
-            <div className="absolute left-0 mt-0 w-40 bg-gray-700 text-white rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+            <div className="absolute left-0 top-full mt-2 min-w-[10rem] bg-gray-700 text-white rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 flex flex-col">
               {renderSubsectionButtons('residents', sectionsConfig.residents.subsections)}
             </div>
           </div>
 
-          <button 
+          <div className="relative group">
+            <button 
               onClick={() => {
                 clearHash()
-                setCurrentSection('newsletters')
+                setCurrentSection('connect')
               }}
-          >
-            Newsletters
-          </button>
+              className={`px-2 py-2 rounded text-sm sm:px-3 sm:py-2 transition ${currentSection === 'connect' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
+            >
+              Connect
+            </button>
+            <div className="absolute left-0 top-full mt-2 min-w-[10rem] bg-gray-700 text-white rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 flex flex-col">
+              {renderSubsectionButtons('connect', sectionsConfig.connect.subsections)}
+            </div>
+          </div>
+        </nav>
 
+        <div className="hidden md:flex items-center gap-3 flex-shrink-0">
           {isAdminMode && (
             <button 
               onClick={handleLogout}
-              className="ml-4 bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition font-bold"
+              className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition font-bold whitespace-nowrap"
             >
               Logout
             </button>
           )}
-        </nav>
+        </div>
 
         <div className="md:hidden flex items-center gap-4">
-          {isAdminMode ? (
+          {isAdminMode && (
             <button 
               onClick={handleLogout}
               className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm font-bold"
             >
               Logout
             </button>
-          ) : (
-            <a 
-              href="/admin"
-              className="bg-wheelock-accent hover:opacity-90 px-3 py-1 rounded text-sm font-bold text-wheelock-dark inline-block"
-            >
-              Login
-            </a>
           )}
           <button 
             onClick={() => setMenuOpen(!menuOpen)}
@@ -211,9 +217,9 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
               setCurrentSection('home')
               setMenuOpen(false)
             }}
-            className={`px-3 py-2 rounded transition text-left ${currentSection === 'home' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
+            className={`px-3 py-2 rounded transition text-left whitespace-nowrap ${currentSection === 'home' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
           >
-            Home
+            Announcements
           </button>
 
           <div>
@@ -308,16 +314,28 @@ export default function Header({ currentSection, setCurrentSection, isAdminMode,
             )}
           </div>
 
-          <button 
-            onClick={() => {
-              clearHash()
-              setCurrentSection('newsletters')
-              setMenuOpen(false)
-            }}
-            className={`px-3 py-2 rounded transition text-left ${currentSection === 'newsletters' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
-          >
-            Newsletters
-          </button>
+          <div>
+            <button 
+              onClick={() => {
+                if (expandedSection === 'connect') {
+                  setExpandedSection(null)
+                } else {
+                  clearHash()
+                  setExpandedSection('connect')
+                  setCurrentSection('connect')
+                }
+              }}
+              className={`w-full px-3 py-2 rounded transition text-left flex justify-between items-center ${currentSection === 'connect' ? 'bg-wheelock-accent' : 'hover:bg-gray-700'}`}
+            >
+              Connect
+              <span className={`transition-transform ${expandedSection === 'connect' ? 'rotate-180' : ''}`}>▼</span>
+            </button>
+            {expandedSection === 'connect' && (
+              <div className="ml-4 mt-1 flex flex-col gap-1 border-l-2 border-gray-700 pl-2">
+                {renderSubsectionButtons('connect', sectionsConfig.connect.subsections, true)}
+              </div>
+            )}
+          </div>
         </nav>
       )}
     </header>

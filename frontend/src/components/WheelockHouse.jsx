@@ -5,9 +5,9 @@ import PhotoGallery from './PhotoGallery'
 import MarkdownContent from './MarkdownContent'
 
 const DEFAULT_CONTENT = {
-  'Wheelock House': 'Wheelock House provides short-term residency, community programming, and event space for Wheelock House guests. Our goal is to make every stay comfortable, welcoming, and easy to engage with campus life.',
-  'About': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  'Apply': 'To apply for a stay at Wheelock House, please send your application materials to wheelockhouse@example.com. Include your preferred dates, purpose of stay, and any accessibility needs. Applications are reviewed on a rolling basis.',
+  'Wheelock House': 'Wheelock House provides short-term residency, community programming, and event space for Wheelock House guests. Our goal is to make every stay comfortable, welcoming, and easy to engage with campus life.\n\nLearn more about [the Christian study center movement](https://cscmovement.org).',
+  'Calendar': 'Check the calendar below for upcoming gatherings and availability.',
+  'Reservations': 'Use the form below to request a reservation or visit.',
 }
 
 export default function WheelockHouse({ isAdminMode }) {
@@ -39,7 +39,7 @@ export default function WheelockHouse({ isAdminMode }) {
       setSubsections(response.data.subsections || [])
     } catch (error) {
       console.error('Error fetching config:', error)
-      setSubsections(['Wheelock House', 'About', 'Apply', 'Reservations'])
+      setSubsections(['Wheelock House', 'Calendar', 'Reservations'])
     }
   }
 
@@ -97,13 +97,49 @@ export default function WheelockHouse({ isAdminMode }) {
   const introContent = pageIntroSubsection ? getSectionContent(pageIntroSubsection) : ''
   const displayedSubsections = subsections.filter(subsection => subsection !== pageIntroSubsection)
 
+  const renderSectionContent = (subsection) => {
+    const content = sections[subsection] !== undefined ? sections[subsection] : DEFAULT_CONTENT[subsection] || 'No content yet.'
+
+    if (subsection === 'Calendar') {
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-800 leading-relaxed">{content}</p>
+          <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+            <iframe
+              src="https://calendar.google.com/calendar/embed?src=d2hlZWxvY2tzb2NpZXR5QGdtYWlsLmNvbQ"
+              style={{ border: 0, width: '100%', minHeight: '420px' }}
+              title="Wheelock House calendar"
+            />
+          </div>
+        </div>
+      )
+    }
+
+    if (subsection === 'Reservations') {
+      return (
+        <div className="space-y-4">
+          <p className="text-gray-800 leading-relaxed">{content}</p>
+          <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSdAT6EVv761wOPRQ0eK4amheye-onepnT0NzXX4lnzMnG9ACw/viewform?embedded=true"
+              style={{ border: 0, width: '100%', minHeight: '780px' }}
+              title="Wheelock House reservations form"
+            />
+          </div>
+        </div>
+      )
+    }
+
+    return <MarkdownContent content={content} />
+  }
+
   return (
     <section className="py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-wheelock-dark mb-8">Wheelock House</h1>
 
         {introContent ? (
-          <div className="mb-8 max-w-3xl rounded-xl border-l-4 border-wheelock-accent bg-white p-6 shadow-sm">
+          <div className="mb-8 w-full rounded-xl border-l-4 border-wheelock-accent bg-wheelock-light-alt p-6 shadow-sm">
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
               <p className="text-xl leading-8 text-gray-800 whitespace-pre-wrap md:flex-1">
                 {editingSection === pageIntroSubsection ? (
@@ -192,9 +228,7 @@ export default function WheelockHouse({ isAdminMode }) {
                   </div>
                 </div>
               ) : (
-                <MarkdownContent 
-                  content={sections[subsection] !== undefined ? sections[subsection] : DEFAULT_CONTENT[subsection] || 'No content yet.'}
-                />
+                renderSectionContent(subsection)
               )}
             </div>
           ))}

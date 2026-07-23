@@ -9,14 +9,33 @@ Admins log in through the `/admin` route on the website. Once logged in, they ca
 
 To create the first admin, use the registration endpoint:
 
+**Windows PowerShell:**
+```powershell
+curl -X POST https://wheelock-backend.onrender.com/api/auth/register -H "Content-Type: application/json" -d '{\"username\": \"charles.h.clark.v\", \"password\": \"YOUR_PASSWORD\"}'
+```
+
+**Windows Command Prompt (cmd.exe):**
+```cmd
+curl -X POST https://wheelock-backend.onrender.com/api/auth/register -H "Content-Type: application/json" -d "{\"username\": \"charles.h.clark.v\", \"password\": \"YOUR_PASSWORD\"}"
+```
+
+**Mac/Linux:**
 ```bash
-# Create an admin account (replace username and password with your values)
-curl -X POST https://wheelock-backend.onrender.com/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "username": "your_username",
-    "password": "your_secure_password"
-  }'
+curl -X POST https://wheelock-backend.onrender.com/api/auth/register -H "Content-Type: application/json" -d '{"username": "charles.h.clark.v", "password": "YOUR_PASSWORD"}'
+```
+
+**Windows (File Method - Most Reliable):**
+1. Create a file called `admin.json`:
+```json
+{
+  "username": "charles.h.clark.v",
+  "password": "YOUR_PASSWORD"
+}
+```
+
+2. Run:
+```powershell
+curl -X POST https://wheelock-backend.onrender.com/api/auth/register -H "Content-Type: application/json" -d @admin.json
 ```
 
 ### Option 2: Using Python Script

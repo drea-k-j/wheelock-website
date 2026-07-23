@@ -118,7 +118,7 @@ export default function Admin({ setIsAdminMode }) {
             href="/"
             className="block w-full bg-wheelock-light hover:bg-opacity-90 text-wheelock-dark font-bold py-3 rounded transition mb-4"
           >
-            Go to Home
+            Go to Announcements
           </a>
           
           <button

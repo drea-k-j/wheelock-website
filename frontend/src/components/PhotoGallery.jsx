@@ -25,10 +25,10 @@ export default function PhotoGallery({ page, className = '' }) {
   useEffect(() => {
     if (images.length === 0) return
 
-    // Auto-rotate images every 5 seconds
+    // Auto-rotate images every 10 seconds
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-    }, 5000)
+    }, 10000)
 
     return () => clearInterval(interval)
   }, [images])
@@ -70,11 +70,12 @@ export default function PhotoGallery({ page, className = '' }) {
   return (
     <div className={`${className} relative bg-gray-200 rounded overflow-hidden group`}>
       {/* Image Container */}
-      <div className="relative w-full h-96">
+      <div className="relative w-full h-96 bg-gray-100">
         <img
           src={images[currentIndex]}
           alt={`Photo ${currentIndex + 1}`}
-          className="w-full h-full object-cover"
+          loading="lazy"
+          className="w-full h-full object-contain"
         />
         
         {/* Navigation Buttons */}
@@ -99,12 +100,6 @@ export default function PhotoGallery({ page, className = '' }) {
       </div>
 
       {/* Photo Counter */}
-      {images.length > 1 && (
-        <div className="absolute bottom-3 right-3 bg-black bg-opacity-60 text-white px-3 py-1 rounded text-sm">
-          {currentIndex + 1} / {images.length}
-        </div>
-      )}
-
       {/* Dot Indicators */}
       {images.length > 1 && (
         <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-2">

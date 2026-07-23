@@ -69,7 +69,7 @@ export default function About({ isAdminMode }) {
   }
 
   const pageIntroSubsection = subsections.find(subsection => {
-    const normalizedTitle = 'About Wheelock'.toLowerCase().trim()
+    const normalizedTitle = 'About the Wheelock Society'.toLowerCase().trim()
     const normalizedSubsection = subsection.toLowerCase().trim()
     return normalizedTitle === normalizedSubsection || normalizedTitle.includes(normalizedSubsection)
   })
@@ -101,11 +101,11 @@ export default function About({ isAdminMode }) {
 
   return (
     <section className="py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-wheelock-dark mb-8">About Wheelock</h1>
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-4xl font-bold text-wheelock-dark mb-8">About the Wheelock Society</h1>
 
         {introContent ? (
-          <div className="mb-8 max-w-3xl rounded-xl border-l-4 border-wheelock-accent bg-white p-6 shadow-sm">
+          <div className="mb-8 w-full rounded-xl border-l-4 border-wheelock-accent bg-wheelock-light-alt p-6 shadow-sm">
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
               <p className="text-xl leading-8 text-gray-800 whitespace-pre-wrap md:flex-1">
                 {editingSection === pageIntroSubsection ? (

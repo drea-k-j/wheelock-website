@@ -43,7 +43,7 @@ def seed_database(database_url, content_data=None):
 - **2015:** Wheelock House purchased
 - **2022:** Wheelock House opens for residents
 - **2025:** Wheelock House opens to the public'''),
-                ('Leadership', '''- **Charlie Clark '11** - Executive Director (charlie@wheelocksociety.org)
+                ('Leadership', '''- **Charlie Clark '11** - Executive Director
 - **Bruce McKenzie '81** - Chairman
 - **Gregg Fairbrothers '76**
 - **Anne McCune '79**
@@ -61,23 +61,19 @@ def seed_database(database_url, content_data=None):
             ],
             'wheelock_weekend': [
                 ('Wheelock Weekend', 'The Wheelock Weekend takes place every April. Christian alumni return to Hanover for three days of fellowship with current students and one another. Photos from past events are available in our gallery.'),
-                ('Date & Registration', 'Registration will be available as the next weekend approaches.'),
-                ('Schedule', 'Full schedule coming soon. Please refer to the [campus map](https://drive.google.com/file/d/1X1zse-oQVrGseYz0NkrsR6ZWLHSI_o2y/view?usp=share_link) for event locations and directions.'),
-                ('Speaker Bios', 'Speaker bios and headshots coming soon.'),
-                ('Campus Map', '[View Campus Map](https://drive.google.com/file/d/1X1zse-oQVrGseYz0NkrsR6ZWLHSI_o2y/view?usp=share_link)'),
+                ('Registration', 'Registration information will be shared soon. Please check back later for details.'),
+                ('Schedule', 'Full schedule coming soon. Please refer to the campus map image for event locations and directions.'),
+                ('Bios', 'Speaker bios and headshots coming soon.'),
+                ('Campus Map', 'Campus map shown below.'),
             ],
             'wheelock_house': [
                 ('Wheelock House', 'The Wheelock House is Dartmouth\'s Christian living learning community and study center. Built in 1773 as the personal home of Dartmouth\'s founding president, Eleazar Wheelock, it now serves as an intentional Christian community. Photos and more information available in our gallery.'),
-                ('About', 'Built in 1773 as the personal home of Dartmouth\'s founding president, Eleazar Wheelock, the Wheelock House is a Christian intentional community with 24 residential members. Residents attend weekly dinner discussions with Christian faculty and alumni, participate in spiritual retreats, and inhabit formative rhythms of work and prayer. The ground-floor study center at the House includes a lecture hall, library, seminar room, and café, all open to the public and offering numerous hospitality opportunities throughout the week.'),
-                ('Reservations', '''To request to reserve a public space at the Wheelock House, fill out the form below. Check the calendar for availability.
-
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdAT6EVv761wOPRQ0eK4amheye-onepnT0NzXX4lnzMnG9ACw/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0" style="border-radius:8px">Loading...</iframe>
-
-<iframe src="https://calendar.google.com/calendar/embed?src=d2hlZWxvY2tzb2NpZXR5QGdtYWlsLmNvbQ" style="border:0;border-radius:8px" width="100%" height="600" frameborder="0" scrolling="no"></iframe>'''),
-                ('Learn More', '[Learn more about the Christian study center movement](https://cscmovement.org)'),
+                ('Calendar', 'Check the calendar below for upcoming gatherings and availability.'),
+                ('Reservations', 'Use the form below to request a reservation or visit.'),
             ],
             'residents': [
                 ('Manual', '[Residents\' Manual](/assets/residents-manual.pdf)'),
+                ('Application', 'Applications for resident positions will be announced soon.'),
                 ('Key Dates', '''**Summer 26S (Spring 2026)**
 - Move-in: March 19
 - Move-out: June 15
@@ -111,14 +107,15 @@ def seed_database(database_url, content_data=None):
         
         cursor = conn.cursor()
         
-        # Check if database already has content (idempotency check)
+        # Insert or update content for each table so the latest seed values are applied
+        # even when the database was already populated from an earlier run.
         cursor.execute("SELECT COUNT(*) FROM about_sections")
         existing_rows = cursor.fetchone()[0]
         
         if existing_rows > 0:
-            print("✓ Database already populated with content (skipping seed)")
-            conn.close()
-            return True
+            print("✓ Database already populated with content (updating seed values)")
+        else:
+            print("✓ Database was empty; populating seed values")
         
         # Insert content into each table
         for table, data in content_data.items():

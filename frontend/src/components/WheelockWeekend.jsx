@@ -7,7 +7,7 @@ import MarkdownContent from './MarkdownContent'
 const DEFAULT_CONTENT = {
   'Wheelock Weekend': 'Wheelock Weekend brings alumni, students, and guests together for a full schedule of events, meals, and debrief sessions. Stay connected, learn about campus resources, and experience the Wheelock community.',
   'Schedule': 'This weekend: 4/17-4/19\n\n4pm 4/18 — Veritas Forum\n\nPlease check in at the Wheelock welcome desk and refer to the printed schedule for session locations, meals, and breakout rooms.',
-  'Registration': 'For registration, please fill out the Google Form linked below or contact us at wheelock@example.com. Early registration is encouraged.'
+  'Registration': 'Registration information will be shared soon. Please check back later for details.'
 }
 
 export default function WheelockWeekend({ isAdminMode }) {
@@ -39,7 +39,7 @@ export default function WheelockWeekend({ isAdminMode }) {
       setSubsections(response.data.subsections || [])
     } catch (error) {
       console.error('Error fetching config:', error)
-      setSubsections(['Wheelock Weekend', 'Schedule', 'Bios', 'Campus Map', 'Registration'])
+      setSubsections(['Wheelock Weekend', 'Schedule', 'Registration', 'Campus Map'])
     }
   }
 
@@ -68,8 +68,8 @@ export default function WheelockWeekend({ isAdminMode }) {
       : ''
   }
 
-  const fallbackSections = ['Wheelock Weekend', 'Schedule', 'Bios', 'Campus Map', 'Registration']
-  const sectionList = subsections.length ? Array.from(new Set([...subsections, ...fallbackSections])) : fallbackSections
+  const fallbackSections = ['Wheelock Weekend', 'Schedule', 'Registration', 'Campus Map']
+  const sectionList = Array.from(new Set([...fallbackSections, ...subsections.filter(subsection => subsection !== 'Bios')]))
   const pageIntroSubsection = sectionList.find(subsection => {
     const normalizedTitle = 'Wheelock Weekend'.toLowerCase().trim()
     const normalizedSubsection = subsection.toLowerCase().trim()
@@ -100,6 +100,10 @@ export default function WheelockWeekend({ isAdminMode }) {
       <MarkdownContent content={content} />
     )
 
+    const campusMapContent = subsection === 'Campus Map'
+      ? content.replace(/\[View Campus Map\]\([^)]*\)/g, '').trim()
+      : content
+
     if (subsection === 'Campus Map') {
       return (
         <div className="space-y-4">
@@ -110,7 +114,7 @@ export default function WheelockWeekend({ isAdminMode }) {
               className="w-full object-cover"
             />
           </div>
-          {textContent}
+          <MarkdownContent content={campusMapContent} />
         </div>
       )
     }
@@ -123,15 +127,15 @@ export default function WheelockWeekend({ isAdminMode }) {
   }
 
   const introContent = pageIntroSubsection ? getSectionContent(pageIntroSubsection) : ''
-  const displayedSubsections = sectionList.filter(subsection => subsection !== pageIntroSubsection)
+  const displayedSubsections = sectionList.filter(subsection => subsection !== pageIntroSubsection && subsection !== 'Bios')
 
   return (
     <section className="py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-wheelock-dark mb-8">Wheelock Weekend</h1>
 
         {introContent ? (
-          <div className="mb-8 max-w-3xl rounded-xl border-l-4 border-wheelock-accent bg-white p-6 shadow-sm">
+          <div className="mb-8 w-full rounded-xl border-l-4 border-wheelock-accent bg-wheelock-light-alt p-6 shadow-sm">
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
               <div className="md:flex-1">
                 {editingSection === pageIntroSubsection ? (

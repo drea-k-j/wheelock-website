@@ -77,7 +77,7 @@ export default function Newsletters({ isAdminMode }) {
 
   return (
     <section className="py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-wheelock-dark mb-8">Newsletters</h1>
 
         <div className="grid gap-8">
@@ -129,18 +129,16 @@ export default function Newsletters({ isAdminMode }) {
                     content={sections[subsection] !== undefined ? sections[subsection] : DEFAULT_CONTENT[subsection] || 'No content yet.'}
                   />
                   
-                  {!isAdminMode && (
-                    <div className="mt-4">
-                      <a 
-                        href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="inline-block bg-wheelock-accent text-white px-4 py-2 rounded hover:opacity-90"
-                      >
-                        Subscribe to Newsletter
-                      </a>
-                    </div>
-                  )}
+                  <div className="mt-4">
+                    <a 
+                      href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-block bg-wheelock-accent text-white px-4 py-2 rounded hover:opacity-90"
+                    >
+                      Subscribe to Newsletter
+                    </a>
+                  </div>
                 </div>
               )}
             </div>

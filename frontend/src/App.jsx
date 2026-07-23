@@ -5,7 +5,7 @@ import About from './components/About'
 import WheelockHouse from './components/WheelockHouse'
 import WheelockWeekend from './components/WheelockWeekend'
 import Residents from './components/Residents'
-import Newsletters from './components/Newsletters'
+import Connect from './components/Connect'
 import Footer from './components/Footer'
 import Admin from './pages/Admin'
 
@@ -50,7 +50,7 @@ function App() {
       {currentSection === 'wheelock-house' && <WheelockHouse isAdminMode={isAdminMode} />}
       {currentSection === 'wheelock-weekend' && <WheelockWeekend isAdminMode={isAdminMode} />}
       {currentSection === 'residents' && <Residents isAdminMode={isAdminMode} />}
-      {currentSection === 'newsletters' && <Newsletters isAdminMode={isAdminMode} />}
+      {currentSection === 'connect' && <Connect />}
       
       <Footer />
     </div>

@@ -80,7 +80,7 @@ export default function Residents({ isAdminMode }) {
 
   return (
     <section className="py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-wheelock-dark mb-8">Residents</h1>
 
         <div className="grid gap-8">
@@ -127,9 +127,28 @@ export default function Residents({ isAdminMode }) {
                   </div>
                 </div>
               ) : (
-                <MarkdownContent 
-                  content={sections[subsection] !== undefined ? sections[subsection] : DEFAULT_CONTENT[subsection] || 'No content yet.'}
-                />
+                subsection === 'Manual' ? (
+                  <div>
+                    <a
+                      href={
+                        typeof sections[subsection] === 'string' && sections[subsection].match(/https?:\/\/[^\s)]+\.pdf/) ?
+                          sections[subsection].match(/https?:\/\/[^\s)]+\.pdf/)[0] :
+                          '/assets/residents-manual.pdf'
+                      }
+                      download
+                      className="inline-flex items-center justify-center bg-wheelock-accent text-white px-5 py-3 rounded hover:opacity-90 transition"
+                    >
+                      Download Residents' Manual
+                    </a>
+                    <div className="mt-4 text-sm text-gray-600">
+                      If the manual does not download automatically, right-click and choose "Save link as...".
+                    </div>
+                  </div>
+                ) : (
+                  <MarkdownContent 
+                    content={sections[subsection] !== undefined ? sections[subsection] : DEFAULT_CONTENT[subsection] || 'No content yet.'}
+                  />
+                )
               )}
             </div>
           ))}
