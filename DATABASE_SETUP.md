@@ -39,7 +39,7 @@ INSERT INTO about (subsection, content)
 VALUES 
   ('About', 'Your about page content here...'),
   ('History', 'Your history content here...'),
-  ('Leadership', 'Your leadership content here...')
+  ('Board of Trustees', 'Your leadership content here...')
 ON CONFLICT (subsection) DO UPDATE SET content = EXCLUDED.content;
 
 -- Insert Wheelock House content
@@ -115,7 +115,7 @@ def seed_database(database_url):
         'about': [
             ('About', 'Welcome to the About section...'),
             ('History', 'Our organization was founded...'),
-            ('Leadership', 'Our leadership team includes...'),
+            ('Board of Trustees', 'Our leadership team includes...'),
         ],
         'wheelock_house': [
             ('Wheelock House', 'Wheelock House is...'),

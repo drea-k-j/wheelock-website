@@ -7,7 +7,7 @@ router = APIRouter(prefix="/api/config", tags=["config"])
 SECTIONS_CONFIG = {
     "about": {
         "label": "About",
-        "subsections": ["About", "History", "Leadership"]
+        "subsections": ["About", "History", "Board of Trustees"]
     },
     "wheelock-house": {
         "label": "Wheelock House",

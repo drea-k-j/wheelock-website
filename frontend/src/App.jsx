@@ -21,8 +21,9 @@ function App() {
     }
   }, [])
 
-  // Show admin page if on /admin route
-  if (window.location.pathname === '/admin') {
+  // Show admin page if on /admin route (accept trailing slash)
+  const normalizedPath = window.location.pathname.replace(/\/+$, '')
+  if (normalizedPath === '/admin') {
     return <Admin setIsAdminMode={setIsAdminMode} />
   }
 

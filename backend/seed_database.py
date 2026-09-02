@@ -43,7 +43,7 @@ def seed_database(database_url, content_data=None):
 - **2015:** Wheelock House purchased
 - **2022:** Wheelock House opens for residents
 - **2025:** Wheelock House opens to the public'''),
-                ('Leadership', '''- **Charlie Clark '11** - Executive Director
+                ('Board of Trustees', '''- **Charlie Clark '11** - Executive Director
 - **Bruce McKenzie '81** - Chairman
 - **Gregg Fairbrothers '76**
 - **Anne McCune '79**
@@ -64,10 +64,10 @@ def seed_database(database_url, content_data=None):
                 ('Registration', 'Registration information will be shared soon. Please check back later for details.'),
                 ('Schedule', 'Full schedule coming soon. Please refer to the campus map image for event locations and directions.'),
                 ('Bios', 'Speaker bios and headshots coming soon.'),
-                ('Campus Map', 'Campus map shown below.'),
+                ('Campus Map', ''),
             ],
             'wheelock_house': [
-                ('Wheelock House', 'The Wheelock House is Dartmouth\'s Christian living learning community and study center. Built in 1773 as the personal home of Dartmouth\'s founding president, Eleazar Wheelock, it now serves as an intentional Christian community. Photos and more information available in our gallery.'),
+                ('Wheelock House', 'Built in 1773 as the personal home of Dartmouth\'s founding president, the Wheelock House is Dartmouth\'s Christian living learning community and study center. In addition to housing 24 students and alumni in an intentional community, the Wheelock House is open to the public as a meeting place and study space—every day from 8am to 10pm.'),
                 ('Calendar', 'Check the calendar below for upcoming gatherings and availability.'),
                 ('Reservations', 'Use the form below to request a reservation or visit.'),
             ],
